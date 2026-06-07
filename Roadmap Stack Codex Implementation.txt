@@ -1,0 +1,835 @@
+Roadmap arquitectónico: PortalUP Stack basado en GStack para Codex
+0. Visión del producto
+Nombre interno sugerido
+PortalUP Stack for Codex
+
+O más corto:
+
+pstack-codex
+Objetivo
+
+Crear una adaptación de GStack para que funcione sobre Codex, reutilizando la mayor cantidad posible de:
+
+roles
+prompts
+comandos
+checklists
+flujos de revisión
+flujos de QA
+flujos de documentación
+flujos de shipping
+
+Pero reemplazando lo que dependa de Claude Code por mecanismos compatibles con Codex:
+
+CLAUDE.md       → AGENTS.md
+.claude/skills  → .agents/skills
+slash commands  → skills invocables con $skill o comandos wrapper
+Claude hooks    → scripts / wrappers / workflows
+Claude-specific → Codex-compatible instructions
+
+AGENTS.md es un formato abierto pensado como un “README para agentes”, usado para dar instrucciones, comandos de setup, pruebas, estilo de código y contexto del proyecto a diferentes agentes de programación.
+
+1. Principio de arquitectura
+
+Yo no haría un fork sucio de GStack. Haría una arquitectura en 4 capas:
+
+┌─────────────────────────────────────────────┐
+│ PortalUP Stack                              │
+│ Branding, reglas PortalUP, casos FileNet,   │
+│ RPA, BPM, SQL, AWS, propuestas comerciales  │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│ Codex Adapter Layer                         │
+│ AGENTS.md, .agents/skills, scripts, plugins │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│ GStack Methodology Layer                    │
+│ roles, comandos, QA, review, ship, docs     │
+└─────────────────────────────────────────────┘
+                    ↓
+┌─────────────────────────────────────────────┐
+│ Codex Runtime                               │
+│ Codex CLI / IDE / App                       │
+└─────────────────────────────────────────────┘
+
+Esto evita quedar amarrados a Claude Code y permite que mañana también pueda existir:
+
+PortalUP Stack for Claude
+PortalUP Stack for Cursor
+PortalUP Stack for Gemini CLI
+PortalUP Stack for OpenCode
+2. Alcance del MVP
+
+No portaría todo GStack en la primera versión. Portaría lo que más valor tiene para PortalUP.
+
+Skills iniciales
+portalup-review
+portalup-qa
+portalup-qa-only
+portalup-ship
+portalup-plan-eng-review
+portalup-plan-ceo-review
+portalup-document-generate
+portalup-document-release
+portalup-cso
+portalup-autoplan
+portalup-investigate
+portalup-careful
+Skills propios de PortalUP
+
+Estos sí serían diferenciales:
+
+portalup-filenet-review
+portalup-rpa-review
+portalup-bpm-review
+portalup-sql-review
+portalup-aws-backup-review
+portalup-propuesta-comercial
+portalup-soporte-incidente
+portalup-arquitectura-solucion
+3. Estructura objetivo del repositorio
+
+La dejaría así:
+
+portalup-stack-codex/
+│
+├── README.md
+├── LICENSE
+├── NOTICE.md
+├── CHANGELOG.md
+├── AGENTS.md
+│
+├── docs/
+│   ├── arquitectura.md
+│   ├── instalacion-codex.md
+│   ├── matriz-portabilidad-gstack.md
+│   ├── guia-uso.md
+│   ├── guia-contribucion.md
+│   └── decisiones-arquitectura/
+│       ├── ADR-001-adaptador-codex.md
+│       ├── ADR-002-estructura-skills.md
+│       └── ADR-003-no-fork-directo.md
+│
+├── .agents/
+│   └── skills/
+│       ├── portalup-review/
+│       │   ├── SKILL.md
+│       │   ├── references/
+│       │   └── assets/
+│       │
+│       ├── portalup-qa/
+│       │   ├── SKILL.md
+│       │   ├── scripts/
+│       │   └── references/
+│       │
+│       ├── portalup-ship/
+│       │   ├── SKILL.md
+│       │   ├── scripts/
+│       │   └── references/
+│       │
+│       ├── portalup-filenet-review/
+│       │   ├── SKILL.md
+│       │   └── references/
+│       │
+│       ├── portalup-rpa-review/
+│       ├── portalup-bpm-review/
+│       ├── portalup-sql-review/
+│       ├── portalup-propuesta-comercial/
+│       └── portalup-arquitectura-solucion/
+│
+├── scripts/
+│   ├── validate-skills.js
+│   ├── install-local.sh
+│   ├── install-local.ps1
+│   ├── export-skills.sh
+│   └── test-skill.sh
+│
+├── templates/
+│   ├── propuesta-comercial.md
+│   ├── informe-tecnico.md
+│   ├── analisis-incidente.md
+│   ├── plan-qa.md
+│   └── release-notes.md
+│
+├── examples/
+│   ├── ejemplo-review-codigo.md
+│   ├── ejemplo-incidente-filenet.md
+│   ├── ejemplo-propuesta-rpa.md
+│   └── ejemplo-sql-server.md
+│
+└── tests/
+    ├── skill-contracts/
+    ├── fixtures/
+    └── expected-output/
+4. Fase 1 — Discovery técnico de GStack
+Objetivo
+
+Entender exactamente qué de GStack es portable y qué está amarrado a Claude Code.
+
+Actividades
+Clonar o revisar el repositorio original de GStack.
+Inventariar comandos y skills existentes.
+Clasificar cada elemento en una matriz:
+Portable directo
+Portable con adaptación
+No portable
+No aplica a PortalUP
+Requiere reemplazo en Codex
+Revisar estructura de carpetas.
+Revisar dependencias técnicas.
+Revisar scripts.
+Revisar referencias explícitas a Claude Code.
+Revisar licencia y conservar atribuciones.
+Entregables
+docs/matriz-portabilidad-gstack.md
+docs/arquitectura.md
+docs/decisiones-arquitectura/ADR-001-adaptador-codex.md
+Criterio de aceptación
+
+La fase queda lista cuando tengamos una tabla así:
+
+Comando GStack	Valor para PortalUP	Compatible Codex	Acción
+/review	Alto	Sí	Portar
+/qa	Alto	Sí	Portar
+/ship	Alto	Sí	Portar
+/browse	Medio	Parcial	Revisar
+/open-gstack-browser	Bajo	No directo	Excluir MVP
+/codex	Alto	Reinterpretar	Convertir en skill de segunda opinión
+/pair-agent	Medio	Parcial	Dejar fase 2
+/cso	Alto	Sí	Portar
+/document-generate	Alto	Sí	Portar
+5. Fase 2 — Diseño del adaptador GStack → Codex
+Objetivo
+
+Definir las reglas de traducción.
+
+Mapeo principal
+GStack / Claude Code            PortalUP Stack / Codex
+---------------------------------------------------------
+CLAUDE.md                       AGENTS.md
+.claude/skills/gstack           .agents/skills/
+slash command /review           skill portalup-review
+slash command /qa               skill portalup-qa
+slash command /ship             skill portalup-ship
+Claude-specific instruction     Codex-compatible instruction
+Claude hooks                    script opcional / workflow wrapper
+
+Codex permite guardar skills en .agents/skills, $HOME/.agents/skills y otros scopes; también puede detectar cambios en skills, y cada skill debe tener un SKILL.md con name y description.
+
+Decisión clave
+
+No intentar replicar los slash commands exactamente al inicio.
+
+En Codex lo natural sería usar:
+
+$portalup-review
+$portalup-qa
+$portalup-ship
+$portalup-filenet-review
+
+Luego, si queremos una experiencia más parecida a GStack, se puede crear un wrapper:
+
+pstack review
+pstack qa
+pstack ship
+pstack filenet-review
+Entregables
+docs/decisiones-arquitectura/ADR-002-estructura-skills.md
+docs/decisiones-arquitectura/ADR-003-no-fork-directo.md
+scripts/validate-skills.js
+Criterio de aceptación
+
+Se aprueba cuando tengamos una regla clara para convertir cualquier skill de GStack a skill Codex.
+
+6. Fase 3 — Port del núcleo GStack
+Objetivo
+
+Portar los skills más importantes de GStack al formato Codex.
+
+Skills núcleo
+1. portalup-review
+
+Equivalente a:
+
+/review
+
+Debe revisar:
+
+calidad de código
+arquitectura
+legibilidad
+seguridad básica
+manejo de errores
+tests
+impacto funcional
+riesgos de despliegue
+
+Salida esperada:
+
+Resumen ejecutivo
+Hallazgos críticos
+Hallazgos medios
+Mejoras sugeridas
+Riesgos
+Pruebas recomendadas
+Decisión: aprobar / aprobar con cambios / rechazar
+2. portalup-qa
+
+Equivalente a:
+
+/qa
+
+Debe hacer:
+
+plan de pruebas
+casos positivos
+casos negativos
+casos borde
+validaciones técnicas
+regresión
+criterios de aceptación
+3. portalup-ship
+
+Equivalente a:
+
+/ship
+
+Debe revisar:
+
+estado del código
+tests
+documentación
+migraciones
+variables de entorno
+rollback
+release notes
+riesgos de producción
+4. portalup-cso
+
+Equivalente a:
+
+/cso
+
+Debe revisar seguridad:
+
+secretos expuestos
+credenciales
+logs sensibles
+permisos
+inyección SQL
+autenticación
+autorización
+dependencias
+riesgos de infraestructura
+5. portalup-document-generate
+
+Equivalente a:
+
+/document-generate
+
+Debe producir:
+
+documentación técnica
+documentación funcional
+manual de instalación
+manual de operación
+release notes
+runbook
+Entregables
+.agents/skills/portalup-review/SKILL.md
+.agents/skills/portalup-qa/SKILL.md
+.agents/skills/portalup-ship/SKILL.md
+.agents/skills/portalup-cso/SKILL.md
+.agents/skills/portalup-document-generate/SKILL.md
+Criterio de aceptación
+
+Cada skill debe cumplir:
+
+tiene name
+tiene description clara
+indica cuándo debe usarse
+indica cuándo NO debe usarse
+define formato de salida
+define criterios de severidad
+define checklist
+no contiene referencias obligatorias a Claude
+funciona en Codex
+7. Fase 4 — Capa PortalUP
+
+Aquí empieza el valor real para tu empresa.
+
+Objetivo
+
+Convertir el stack en algo útil para tus líneas de negocio:
+
+FileNet
+RPA
+BPM
+SQL Server
+PostgreSQL
+AWS backups
+soporte técnico
+propuestas comerciales
+arquitectura de soluciones
+Skills PortalUP
+1. portalup-filenet-review
+
+Casos que debe cubrir:
+
+IBM FileNet P8
+IBM Content Navigator
+WebSphere
+Content Engine
+Process Engine
+Workplace / Case Manager
+errores Java
+classpath
+JACE
+CEWS
+ICN plugins
+roles de seguridad
+colas
+documentos atascados
+integraciones
+
+Salida:
+
+causa probable
+nivel de severidad
+validaciones
+comandos
+logs a revisar
+solución recomendada
+riesgo de producción
+plan de rollback
+2. portalup-rpa-review
+
+Debe revisar:
+
+UiPath
+Rocketbot
+bots attended/unattended
+credenciales
+colas
+reintentos
+logs
+excepciones de negocio
+excepciones técnicas
+orquestadores
+mantenibilidad
+3. portalup-sql-review
+
+Debe revisar:
+
+SQL Server Express vs Standard
+memoria
+CPU
+índices
+backups
+jobs
+collation
+usuarios
+permisos
+crecimiento de bases
+migración
+licenciamiento técnico
+4. portalup-propuesta-comercial
+
+Debe producir:
+
+resumen ejecutivo
+dolor del cliente
+alcance
+fuera de alcance
+supuestos
+entregables
+cronograma
+equipo
+riesgos
+valor mensual
+valor único
+opciones
+siguiente paso
+5. portalup-soporte-incidente
+
+Debe convertir un problema técnico en:
+
+diagnóstico
+hipótesis
+validaciones paso a paso
+comandos
+plan de contingencia
+solución definitiva
+mensaje para cliente
+Entregables
+.agents/skills/portalup-filenet-review/SKILL.md
+.agents/skills/portalup-rpa-review/SKILL.md
+.agents/skills/portalup-sql-review/SKILL.md
+.agents/skills/portalup-propuesta-comercial/SKILL.md
+.agents/skills/portalup-soporte-incidente/SKILL.md
+Criterio de aceptación
+
+Cada skill debe ser probado con casos reales de PortalUP.
+
+Ejemplos:
+
+Error WebSphere / FileNet
+Migración SQL Express a Standard
+Bot RPA fallando por credenciales
+Propuesta comercial para soporte mensual
+Backup AWS S3 Windows/Linux
+8. Fase 5 — Instalador local
+Objetivo
+
+Que el stack no sea solo una carpeta manual, sino algo instalable.
+
+Instalación inicial simple
+
+Para Linux/macOS:
+
+git clone https://github.com/portalup/portalup-stack-codex.git
+cd portalup-stack-codex
+./scripts/install-local.sh
+
+Para Windows:
+
+git clone https://github.com/portalup/portalup-stack-codex.git
+cd portalup-stack-codex
+.\scripts\install-local.ps1
+Qué debe hacer el instalador
+validar que existe Codex
+crear carpeta ~/.agents/skills si no existe
+copiar o enlazar skills
+copiar templates
+validar SKILL.md
+mostrar skills instaladas
+Entregables
+scripts/install-local.sh
+scripts/install-local.ps1
+scripts/validate-skills.js
+docs/instalacion-codex.md
+Criterio de aceptación
+
+Un equipo PortalUP debe poder instalarlo y probar:
+
+$portalup-review
+$portalup-qa
+$portalup-propuesta-comercial
+
+Sin modificar archivos manualmente.
+
+9. Fase 6 — Testing y evaluación
+Objetivo
+
+No confiar solo en que “la IA responde bonito”. Hay que medir calidad.
+
+Dataset inicial de pruebas
+
+Crearíamos casos de prueba:
+
+tests/fixtures/filenet-error-classpath.md
+tests/fixtures/sql-express-upgrade.md
+tests/fixtures/rpa-credential-error.md
+tests/fixtures/aws-backup-s3.md
+tests/fixtures/propuesta-soporte-filenet.md
+tests/fixtures/code-review-fastapi.md
+Evaluación por skill
+
+Cada skill tendría una rúbrica:
+
+Criterio	Peso
+Identifica causa probable	20%
+Da pasos accionables	20%
+Evita inventar datos	15%
+Ordena por severidad	15%
+Incluye riesgos	10%
+Incluye validaciones	10%
+Formato claro	10%
+Resultado esperado
+score mínimo MVP: 75/100
+score objetivo V1: 85/100
+score objetivo producción: 90/100
+Entregables
+tests/fixtures/
+tests/expected-output/
+docs/evaluacion-skills.md
+10. Fase 7 — CLI opcional tipo GStack
+
+Esta fase no la haría de entrada, pero sí después del MVP.
+
+Objetivo
+
+Tener comandos tipo:
+
+pstack review
+pstack qa
+pstack ship
+pstack filenet
+pstack propuesta
+Ejemplo
+pstack review ./src
+pstack qa ./features/login
+pstack propuesta ./requerimiento-cliente.md
+Arquitectura
+pstack CLI
+   ↓
+lee comando
+   ↓
+arma prompt estándar
+   ↓
+invoca Codex con skill correspondiente
+   ↓
+guarda salida en /outputs
+Entregables
+cli/
+  package.json
+  src/
+    index.ts
+    commands/
+      review.ts
+      qa.ts
+      ship.ts
+      propuesta.ts
+Criterio de aceptación
+
+Que una persona de PortalUP pueda usar el stack sin memorizar el nombre exacto de cada skill.
+
+11. Fase 8 — Empaquetado como plugin Codex
+
+Codex diferencia entre skills como formato de autoría y plugins como unidad instalable/distribuible; la documentación oficial indica que los plugins pueden agrupar varias skills y opcionalmente app mappings, configuración MCP y assets.
+
+Objetivo
+
+Convertir portalup-stack-codex en algo distribuible internamente.
+
+Resultado deseado
+PortalUP Stack Plugin
+
+Incluye:
+
+skills
+templates
+assets
+scripts
+configuración opcional
+Criterio de aceptación
+
+Instalable por cualquier desarrollador/consultor PortalUP sin copiar carpetas manualmente.
+
+12. Plan de ejecución sugerido
+Semana 1 — Discovery y diseño
+Día	Actividad	Entregable
+1	Inventario GStack	matriz de comandos
+2	Matriz de portabilidad	docs/matriz-portabilidad
+3	Diseño adaptador Codex	ADR-001
+4	Estructura repo	repo base
+5	AGENTS.md inicial	AGENTS.md V0
+Semana 2 — MVP GStack Core
+Día	Actividad	Entregable
+1	Port review	skill funcionando
+2	Port qa	skill funcionando
+3	Port ship	skill funcionando
+4	Port cso	skill funcionando
+5	Pruebas MVP	reporte QA
+Semana 3 — PortalUP Layer
+Día	Actividad	Entregable
+1	Skill FileNet	portalup-filenet-review
+2	Skill RPA	portalup-rpa-review
+3	Skill SQL	portalup-sql-review
+4	Skill propuesta comercial	portalup-propuesta-comercial
+5	Casos reales	fixtures + evaluación
+Semana 4 — Instalación, pruebas y documentación
+Día	Actividad	Entregable
+1	Instalador Linux/macOS	install-local.sh
+2	Instalador Windows	install-local.ps1
+3	Documentación uso	guia-uso.md
+4	Evaluación completa	score por skill
+5	Release MVP	versión v0.1.0
+13. Seguimiento tipo arquitecto
+
+Yo manejaría el proyecto con estos tableros.
+
+Tablero 1 — Arquitectura
+ADR pendientes
+Decisiones tomadas
+Riesgos técnicos
+Dependencias externas
+Cambios de diseño
+Tablero 2 — Portabilidad
+Comando GStack
+Estado
+Responsable
+Dificultad
+Bloqueos
+Porcentaje portado
+
+Ejemplo:
+
+Comando	Estado	Dificultad	Decisión
+/review	En port	Baja	MVP
+/qa	Pendiente	Baja	MVP
+/ship	Pendiente	Media	MVP
+/browse	Pendiente	Alta	Fase 2
+/pair-agent	Pendiente	Alta	Fase 2
+/open-gstack-browser	Excluido	Alta	No MVP
+Tablero 3 — Calidad
+Skill
+Casos probados
+Score
+Errores encontrados
+Mejoras pendientes
+Aprobado / No aprobado
+
+Ejemplo:
+
+Skill	Score	Estado
+portalup-review	84/100	Aprobado MVP
+portalup-qa	78/100	Ajustar
+portalup-filenet-review	88/100	Aprobado
+portalup-propuesta-comercial	81/100	Aprobado MVP
+14. Definition of Done
+
+Una skill no se considera lista hasta cumplir esto:
+
+Tiene SKILL.md válido
+Tiene name y description
+Tiene instrucciones claras
+Tiene formato de salida
+Tiene criterios de severidad
+Tiene ejemplos de uso
+No depende de Claude Code
+Funciona con Codex
+Fue probada con mínimo 2 casos
+Tiene score mínimo 75/100
+Está documentada en README
+15. Riesgos del proyecto
+Riesgo 1 — Portar demasiado
+
+Problema: querer copiar todo GStack desde el día uno.
+
+Mitigación: MVP con 8 a 12 skills máximo.
+
+Riesgo 2 — Skills demasiado largas
+
+Codex usa progressive disclosure, pero la descripción inicial de cada skill es clave para que pueda seleccionarla bien; si hay muchas skills, las descripciones pueden acortarse para no saturar el contexto.
+
+Mitigación: descriptions cortas, específicas y con palabras gatillo.
+
+Riesgo 3 — Dependencias Claude-only
+
+Problema: algunos comandos pueden depender de funciones específicas de Claude Code.
+
+Mitigación: clasificarlos como:
+
+port directo
+port adaptado
+reemplazar
+excluir
+Riesgo 4 — Resultado bonito pero poco accionable
+
+Problema: la IA entrega texto elegante, pero no operativo.
+
+Mitigación: cada skill debe forzar salidas con:
+
+acciones
+comandos
+validaciones
+riesgos
+criterios de aceptación
+Riesgo 5 — Falta de identidad PortalUP
+
+Problema: terminar con un clon genérico de GStack.
+
+Mitigación: agregar capa PortalUP desde la semana 3:
+
+FileNet
+RPA
+BPM
+SQL
+AWS
+propuestas comerciales
+soporte técnico
+16. Backlog priorizado
+P0 — Obligatorio MVP
+Crear repositorio base
+Crear AGENTS.md
+Crear matriz de portabilidad
+Portar portalup-review
+Portar portalup-qa
+Portar portalup-ship
+Portar portalup-cso
+Crear portalup-filenet-review
+Crear portalup-propuesta-comercial
+Crear instalador local
+Crear README
+P1 — Muy importante
+portalup-rpa-review
+portalup-sql-review
+portalup-soporte-incidente
+portalup-document-generate
+fixtures de prueba
+rúbrica de evaluación
+P2 — Fase avanzada
+CLI pstack
+plugin Codex
+integración GitHub Issues
+integración PR review
+integración MCP
+comparador multiagente Codex/Claude
+P3 — Futuro
+PortalUP Stack for Claude
+PortalUP Stack for Cursor
+PortalUP Stack for Gemini CLI
+Skill marketplace interno
+evaluación automática con métricas
+17. Primera versión realista
+
+La primera versión debería llamarse:
+
+PortalUP Stack Codex v0.1.0
+
+Y debería incluir:
+
+AGENTS.md
+portalup-review
+portalup-qa
+portalup-ship
+portalup-cso
+portalup-filenet-review
+portalup-propuesta-comercial
+portalup-soporte-incidente
+README
+instalador local
+matriz de portabilidad
+
+Eso ya sería útil.
+
+No sería solo una “idea”. Sería un activo interno de PortalUP para trabajar con IA de forma repetible.
+
+18. Mi recomendación como arquitecto
+
+Yo no haría esto:
+
+copiar GStack completo
+cambiar nombres
+probar a ver si funciona
+
+Haría esto:
+
+1. Fork conceptual de GStack
+2. Adaptador limpio para Codex
+3. Skills núcleo
+4. Skills PortalUP
+5. Testing con casos reales
+6. Instalador
+7. Documentación
+8. CLI opcional
+9. Plugin distribuible
+
+La decisión arquitectónica más importante sería esta:
+
+PortalUP Stack no debe ser un clon de GStack. Debe ser una distribución compatible con Codex, inspirada y parcialmente derivada de GStack, pero especializada en los servicios reales de PortalUP.
+
+Con ese enfoque, no estarías reinventando lo inventado. Estarías haciendo una adaptación profesional, reutilizable y con identidad propia.
