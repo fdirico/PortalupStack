@@ -30,6 +30,9 @@ La aplicacion no es un backend ni una UI tradicional. Es un paquete de conocimie
 | `$portalup-autoplan` | Orquestar plan con perspectiva estrategia + ingenieria + QA + seguridad |
 | `$portalup-investigate` | Investigar causa raiz antes de corregir |
 | `$portalup-careful` | Evaluar acciones destructivas o riesgosas antes de ejecutarlas |
+| `$portalup-arquitecto-experto` | Revisar decisiones de arquitectura, tradeoffs, roadmap tecnico y riesgos estrategicos |
+| `$portalup-comercial-experto` | Calificar oportunidades, definir estrategia comercial, alcance, opciones y negociacion |
+| `$portalup-marketing-experto` | Crear posicionamiento, mensajes, campanas, contenido y estrategia go-to-market |
 | `$portalup-filenet-review` | Diagnosticar o revisar soluciones IBM FileNet |
 | `$portalup-rpa-review` | Revisar bots, orquestadores, credenciales, colas y reintentos |
 | `$portalup-bpm-review` | Revisar procesos BPM, colas, aprobaciones, SLAs e integraciones |
@@ -58,6 +61,14 @@ Ejemplo propuesta:
 ```text
 Usa $portalup-propuesta-comercial para una propuesta de soporte mensual FileNet con bolsa de horas.
 ```
+
+Ejemplo experto:
+
+```text
+Necesito evaluar si esta oportunidad de soporte FileNet/RPA conviene y como deberiamos plantearla comercialmente.
+```
+
+El orquestador deberia derivar una solicitud asi hacia `$portalup-comercial-experto` y, si hay complejidad tecnica, hacia `$portalup-arquitecto-experto`.
 
 ## Criterios de calidad
 

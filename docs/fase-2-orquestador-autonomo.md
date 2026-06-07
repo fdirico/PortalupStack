@@ -63,6 +63,15 @@ En MVP avanzado, estos roles pueden estar en una sola skill `portalup-orchestrat
 - [ ] Definir salida estandar: intencion detectada, especialistas seleccionados, plan, resultado consolidado, proximos pasos.
 - [ ] Agregar checklist para evitar sobreruteo y exceso de contexto.
 
+### 2.1. Especialistas expertos consultivos
+
+- [x] Crear `portalup-arquitecto-experto`.
+- [x] Crear `portalup-comercial-experto`.
+- [x] Crear `portalup-marketing-experto`.
+- [x] Crear fixtures para los tres expertos.
+- [x] Crear salidas esperadas para los tres expertos.
+- [x] Crear respuestas reales para los tres expertos.
+
 ### 3. Crear mapa de routing
 
 - [x] Crear `docs/orquestador-routing.md`.

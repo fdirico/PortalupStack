@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Marketing Experto"
+  short_description: "Shape positioning, messaging, and campaigns"
+  default_prompt: "Use $portalup-marketing-experto to define positioning and messaging for this offer."
+policy:
+  allow_implicit_invocation: true

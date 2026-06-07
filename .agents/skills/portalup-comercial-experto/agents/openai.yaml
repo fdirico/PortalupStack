@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Comercial Experto"
+  short_description: "Qualify and shape commercial opportunities"
+  default_prompt: "Use $portalup-comercial-experto to shape this commercial opportunity."
+policy:
+  allow_implicit_invocation: true

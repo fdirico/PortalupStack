@@ -6,9 +6,9 @@ Este documento registra la evaluacion de fixtures del MVP. Las respuestas reales
 
 | Comando | Resultado | Alcance |
 | --- | --- | --- |
-| `node scripts\validate-skills.js` | OK | Valida estructura, frontmatter, secciones minimas y metadata `openai.yaml` de 20 skills |
-| `node scripts\validate-fixtures.js` | OK | Valida 8 fixtures, salidas esperadas asociadas y referencias a skills reales |
-| `node scripts\validate-actual-outputs.js` | OK | Valida 8 respuestas reales, score y cumplimiento contra salida esperada |
+| `node scripts\validate-skills.js` | OK | Valida estructura, frontmatter, secciones minimas y metadata `openai.yaml` de 23 skills |
+| `node scripts\validate-fixtures.js` | OK | Valida 11 fixtures, salidas esperadas asociadas y referencias a skills reales |
+| `node scripts\validate-actual-outputs.js` | OK | Valida 11 respuestas reales, score y cumplimiento contra salida esperada |
 
 ## Resultados reales
 
@@ -22,6 +22,9 @@ Este documento registra la evaluacion de fixtures del MVP. Las respuestas reales
 | `propuesta-soporte-filenet.md` | `$portalup-propuesta-comercial` | 86/100 | 80/100 | Aprobado MVP | `tests/actual-output/propuesta-soporte-filenet.md` |
 | `bpm-process-review.md` | `$portalup-bpm-review` | 84/100 | 80/100 | Aprobado MVP | `tests/actual-output/bpm-process-review.md` |
 | `arquitectura-solucion-filenet-rpa.md` | `$portalup-arquitectura-solucion` | 87/100 | 80/100 | Aprobado MVP | `tests/actual-output/arquitectura-solucion-filenet-rpa.md` |
+| `experto-arquitecto-modernizacion.md` | `$portalup-arquitecto-experto` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/experto-arquitecto-modernizacion.md` |
+| `experto-comercial-soporte.md` | `$portalup-comercial-experto` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/experto-comercial-soporte.md` |
+| `experto-marketing-aws-backup.md` | `$portalup-marketing-experto` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/experto-marketing-aws-backup.md` |
 
 ## Criterio de cierre MVP
 

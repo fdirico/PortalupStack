@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Arquitecto Experto"
+  short_description: "Senior architecture advisor"
+  default_prompt: "Use $portalup-arquitecto-experto to review this architecture decision."
+policy:
+  allow_implicit_invocation: true

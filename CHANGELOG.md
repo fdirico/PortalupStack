@@ -14,3 +14,8 @@
 - Added PortalUP-specific BPM, AWS backup, and solution architecture skills.
 - Added v0.1.0 release candidate notes.
 - Added actual Codex fixture outputs and validation for evidence files.
+
+## 0.2.0 - In progress
+
+- Planned autonomous orchestrator phase.
+- Added expert advisory skills for architecture, commercial strategy, and marketing strategy.

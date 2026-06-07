@@ -76,6 +76,10 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [ ] Crear taxonomia de intenciones humanas.
 - [ ] Crear skill `portalup-orchestrator`.
 - [ ] Crear mapa de routing de intencion a skills.
+- [x] Crear experto arquitecto `portalup-arquitecto-experto`.
+- [x] Crear experto comercial `portalup-comercial-experto`.
+- [x] Crear experto marketing `portalup-marketing-experto`.
+- [x] Conectar expertos al routing del orquestador.
 - [ ] Definir niveles de autonomia.
 - [ ] Definir reglas de control de riesgo y cautela.
 - [ ] Crear politica de contexto minimo y presupuesto de tokens.
@@ -102,3 +106,4 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | Release MVP etiquetado como `v0.1.0` | Tag local creado |
 | 2026-06-07 | `main` y tag `v0.1.0` publicados en `origin` | Publicado |
 | 2026-06-07 | Checklist de Fase 2 avanzada creado en `docs/fase-2-orquestador-autonomo.md` | Pendiente implementar |
+| 2026-06-07 | Expertos arquitecto, comercial y marketing agregados como skills y conectados al routing | Validado: 23 skills / 11 fixtures |

@@ -57,6 +57,9 @@ After installation, invoke skills in Codex with names such as:
 - `$portalup-ship`
 - `$portalup-plan-eng-review`
 - `$portalup-plan-ceo-review`
+- `$portalup-arquitecto-experto`
+- `$portalup-comercial-experto`
+- `$portalup-marketing-experto`
 - `$portalup-filenet-review`
 - `$portalup-bpm-review`
 - `$portalup-aws-backup-review`
@@ -73,4 +76,6 @@ This project now tracks GStack as a local, ignored discovery source under `vendo
 
 ## Version
 
-Current target: `v0.1.0` MVP.
+Current release: `v0.1.0`.
+
+Current workstream: autonomous orchestration and expert advisory skills.

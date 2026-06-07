@@ -9,6 +9,7 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 - Roadmap fuente: `Roadmap Stack Codex Implementation.txt`.
 - Version objetivo: `v0.1.0`.
 - Estrategia: adaptador limpio para Codex, no fork directo de GStack.
+- Estado actual de rama `main`: 23 skills y 11 fixtures con respuestas reales.
 - GStack revisado: `https://github.com/garrytan/gstack.git`, commit `476b0ec59741fd69e4151ebee363a432d2b5c497`, version `1.56.1.0`, licencia MIT.
 - Nota critica: `vendor/gstack` es referencia local ignorada por Git. No se debe commitear.
 
@@ -22,7 +23,7 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 4. Capa PortalUP | Completo MVP | Skills FileNet, RPA, BPM, SQL, AWS backup, propuesta, incidente, arquitectura | 8 skills PortalUP creadas |
 | 5. Instalador local | Completo MVP | Scripts Windows/Linux | Scripts iniciales creados |
 | 6. Testing | Completo MVP | Fixtures y rubrica | 8 fixtures, salidas esperadas, respuestas reales, rubrica y validators |
-| 7. Orquestador autonomo | Planificado | Interprete de intencion, routing, continuidad y optimizacion de contexto | Checklist creado en `docs/fase-2-orquestador-autonomo.md` |
+| 7. Orquestador autonomo | En progreso | Interprete de intencion, routing, continuidad y optimizacion de contexto | Expertos arquitecto/comercial/marketing agregados, conectados al routing y validados |
 | 8. CLI pstack | Pendiente | CLI opcional | No iniciado |
 | 9. Plugin Codex | Pendiente | Plugin distribuible | No iniciado |
 
@@ -67,3 +68,4 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 2026-06-07 | Codex | Se ejecutaron los 8 fixtures, se guardaron respuestas reales en `tests/actual-output` y se agrego `scripts/validate-actual-outputs.js` | Tres validadores passed |
 | 2026-06-07 | Codex | Se creo commit, se etiqueto `v0.1.0` y se publico `main` + tag en `origin` | Publicado |
 | 2026-06-07 | Codex | Se documento Fase 2 avanzada para orquestador autonomo, routing, continuidad y optimizacion de tokens | Pendiente implementar |
+| 2026-06-07 | Codex | Se agregaron skills expertas: arquitecto, comercial y marketing; fixtures y salidas esperadas/reales | Tres validadores passed |

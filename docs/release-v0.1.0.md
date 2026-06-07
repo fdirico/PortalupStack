@@ -2,6 +2,8 @@
 
 Estado: release MVP `v0.1.0`, con prueba real de respuestas contra fixtures completada.
 
+Nota: la rama `main` ya incluye trabajo posterior a `v0.1.0` para la fase de orquestador autonomo y especialistas expertos.
+
 ## Alcance incluido
 
 - Adaptador limpio para Codex con `AGENTS.md` y `.agents/skills`.

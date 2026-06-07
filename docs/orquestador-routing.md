@@ -10,14 +10,15 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 
 | Etapa detectada | Senales del usuario | Skills candidatas |
 | --- | --- | --- |
-| Idea o alcance | "quiero hacer", "se me ocurre", "como lo planteamos" | `$portalup-autoplan`, `$portalup-plan-ceo-review`, `$portalup-arquitectura-solucion` |
-| Plan tecnico | "disena", "arquitectura", "como implemento" | `$portalup-plan-eng-review`, `$portalup-arquitectura-solucion`, `$portalup-cso` |
+| Idea o alcance | "quiero hacer", "se me ocurre", "como lo planteamos" | `$portalup-autoplan`, `$portalup-plan-ceo-review`, `$portalup-arquitecto-experto` |
+| Plan tecnico | "disena", "arquitectura", "como implemento" | `$portalup-arquitecto-experto`, `$portalup-plan-eng-review`, `$portalup-arquitectura-solucion`, `$portalup-cso` |
 | Implementacion | "haz", "implementa", "corrige", "ajusta" | `$portalup-investigate`, `$portalup-review`, skill de dominio |
 | Revision | "revisa", "antes de subir", "esta bien?" | `$portalup-review`, `$portalup-cso`, `$portalup-qa` |
 | Incidente | "fallo", "error", "produccion", "usuarios afectados" | `$portalup-soporte-incidente`, `$portalup-investigate`, skill de dominio |
 | Release | "produccion", "deploy", "listo para salir" | `$portalup-ship`, `$portalup-cso`, `$portalup-document-release` |
 | Documentacion | "documenta", "manual", "runbook" | `$portalup-document-generate`, `$portalup-document-release` |
-| Comercial | "propuesta", "cliente", "alcance comercial" | `$portalup-propuesta-comercial`, `$portalup-arquitectura-solucion` |
+| Comercial | "propuesta", "cliente", "alcance comercial", "negociacion", "oportunidad" | `$portalup-comercial-experto`, `$portalup-propuesta-comercial`, `$portalup-arquitectura-solucion` |
+| Marketing | "posicionamiento", "campana", "mensaje", "landing", "go to market", "contenido" | `$portalup-marketing-experto`, `$portalup-comercial-experto` |
 
 ## Dominios
 
@@ -29,7 +30,9 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 | SQL | SQL Server, PostgreSQL, Express, indice, backup, query, migracion DB | `$portalup-sql-review` |
 | AWS Backup | S3, IAM, KMS, backup, restore, retention, lifecycle | `$portalup-aws-backup-review` |
 | Seguridad | secretos, permisos, auth, roles, IAM, datos sensibles | `$portalup-cso` |
-| Arquitectura | solucion, componentes, integracion, fases, operacion | `$portalup-arquitectura-solucion` |
+| Arquitectura | solucion, componentes, integracion, fases, operacion, tradeoff, modernizacion | `$portalup-arquitecto-experto` |
+| Comercial | oportunidad, comprador, presupuesto, valor, alcance, SLA, negociacion | `$portalup-comercial-experto` |
+| Marketing | ICP, audiencia, posicionamiento, mensaje, campana, contenido, canales | `$portalup-marketing-experto` |
 
 ## Reglas de combinacion
 
@@ -37,7 +40,9 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 - Produccion + cambio tecnico: usar `$portalup-ship` + `$portalup-cso`.
 - Cambio de codigo sensible: usar `$portalup-review` + `$portalup-cso`.
 - Problema sin causa clara: usar `$portalup-investigate` antes de proponer fix.
-- Propuesta tecnica/comercial: usar `$portalup-propuesta-comercial` + `$portalup-arquitectura-solucion`.
+- Arquitectura estrategica: usar `$portalup-arquitecto-experto` antes de `$portalup-arquitectura-solucion`.
+- Propuesta tecnica/comercial: usar `$portalup-comercial-experto` + `$portalup-propuesta-comercial`; sumar `$portalup-arquitecto-experto` si hay complejidad tecnica.
+- Marketing o posicionamiento: usar `$portalup-marketing-experto`; sumar `$portalup-comercial-experto` si la salida debe convertirse en oferta o propuesta.
 - Documentacion posterior a release: usar `$portalup-document-release`.
 
 ## Reglas de precedencia
@@ -47,6 +52,7 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 3. Investigacion prevalece sobre correccion cuando no hay causa clara.
 4. Dominio especializado prevalece sobre skill generica.
 5. Si hay ambiguedad de alcance comercial, no inventar precio ni SLA.
+6. Si el usuario pide estrategia, usar experto consultivo antes de generador de entregable.
 
 ## Reglas de stop
 
