@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP QA Only"
+  short_description: "Report-only QA without code changes"
+  default_prompt: "Use $portalup-qa-only to test this flow without changing code."
+policy:
+  allow_implicit_invocation: true
+

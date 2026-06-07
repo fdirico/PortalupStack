@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Ship"
+  short_description: "Check release readiness and rollback"
+  default_prompt: "Use $portalup-ship to assess release readiness."
+policy:
+  allow_implicit_invocation: true

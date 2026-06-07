@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP Eng Plan"
+  short_description: "Review architecture and delivery plans"
+  default_prompt: "Use $portalup-plan-eng-review to review this implementation plan."
+policy:
+  allow_implicit_invocation: true
+

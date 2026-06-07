@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP Investigate"
+  short_description: "Find root cause before fixing"
+  default_prompt: "Use $portalup-investigate to find the root cause first."
+policy:
+  allow_implicit_invocation: true
+

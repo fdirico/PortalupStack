@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP SQL"
+  short_description: "Review database performance and risk"
+  default_prompt: "Use $portalup-sql-review to assess this database change."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP Release Docs"
+  short_description: "Update docs for shipped changes"
+  default_prompt: "Use $portalup-document-release to update release documentation."
+policy:
+  allow_implicit_invocation: true
+

@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP Careful"
+  short_description: "Guard risky and destructive actions"
+  default_prompt: "Use $portalup-careful before this risky operation."
+policy:
+  allow_implicit_invocation: true
+

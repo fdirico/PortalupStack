@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP RPA"
+  short_description: "Review RPA bots and operations"
+  default_prompt: "Use $portalup-rpa-review to assess this bot issue."
+policy:
+  allow_implicit_invocation: true

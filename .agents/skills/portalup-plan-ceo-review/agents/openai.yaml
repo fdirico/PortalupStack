@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP CEO Plan"
+  short_description: "Review product value and scope"
+  default_prompt: "Use $portalup-plan-ceo-review to challenge this product plan."
+policy:
+  allow_implicit_invocation: true
+
