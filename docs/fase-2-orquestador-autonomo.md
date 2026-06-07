@@ -52,7 +52,7 @@ En MVP avanzado, estos roles pueden estar en una sola skill `portalup-orchestrat
 - [x] Clasificar por dominio: general, FileNet, RPA, BPM, SQL, AWS, seguridad, arquitectura, comercial.
 - [x] Clasificar por riesgo: bajo, medio, alto, critico.
 - [x] Definir ejemplos de frases humanas y skill sugerida.
-- [ ] Documentar ambiguedades frecuentes y preguntas minimas permitidas.
+- [x] Documentar ambiguedades frecuentes y preguntas minimas permitidas.
 
 ### 2. Crear skill `portalup-orchestrator`
 
@@ -79,7 +79,7 @@ En MVP avanzado, estos roles pueden estar en una sola skill `portalup-orchestrat
 - [x] Definir reglas de combinacion de skills.
 - [x] Definir reglas de precedencia.
 - [x] Definir reglas de stop: cuando no invocar mas especialistas.
-- [ ] Definir fallback: que hacer si la intencion no encaja.
+- [x] Definir fallback: que hacer si la intencion no encaja.
 
 Ejemplos esperados:
 
@@ -97,17 +97,17 @@ Ejemplos esperados:
 - [x] Definir niveles de autonomia: `assist`, `route`, `execute`, `ship`.
 - [x] Definir acciones que siempre requieren cautela: borrados, force push, cambios productivos, secretos, migraciones, credenciales.
 - [x] Integrar reglas de `$portalup-careful`.
-- [ ] Documentar cuando el orquestador debe detenerse.
+- [x] Documentar cuando el orquestador debe detenerse.
 
 ### 5. Gestion de contexto y tokens
 
 - [x] Crear `docs/contexto-y-tokens.md`.
-- [ ] Definir presupuesto por tarea: pequeno, medio, grande.
-- [ ] Definir que contexto cargar por defecto y que dejar bajo demanda.
-- [ ] Definir formato de resumen de continuidad.
-- [ ] Definir politica de contexto minimo suficiente.
-- [ ] Crear plantilla para handoff entre especialistas.
-- [ ] Crear plantilla para cierre de sesion.
+- [x] Definir presupuesto por tarea: pequeno, medio, grande.
+- [x] Definir que contexto cargar por defecto y que dejar bajo demanda.
+- [x] Definir formato de resumen de continuidad.
+- [x] Definir politica de contexto minimo suficiente.
+- [x] Crear plantilla para handoff entre especialistas.
+- [x] Crear plantilla para cierre de sesion.
 
 Reglas base:
 
@@ -119,29 +119,29 @@ Reglas base:
 
 ### 6. Reciclaje de agentes y continuidad
 
-- [ ] Definir que significa "agente cargado" o "agente fatigado" en esta arquitectura.
-- [ ] Definir umbral de compactacion: tarea larga, muchos archivos, varias decisiones, cambio de etapa.
-- [ ] Crear formato `Agent Handoff Summary`.
-- [ ] Crear formato `Decision Log`.
-- [ ] Crear formato `Open Risks`.
-- [ ] Crear formato `Next Agent Instructions`.
-- [ ] Guardar continuidad en `docs/seguimiento-agentes.md` o en `outputs/sessions/`.
+- [x] Definir que significa "agente cargado" o "agente fatigado" en esta arquitectura.
+- [x] Definir umbral de compactacion: tarea larga, muchos archivos, varias decisiones, cambio de etapa.
+- [x] Crear formato `Agent Handoff Summary`.
+- [x] Crear formato `Decision Log`.
+- [x] Crear formato `Open Risks`.
+- [x] Crear formato `Next Agent Instructions`.
+- [x] Guardar continuidad en `outputs/sessions/`.
 
 ### 7. Evidencia y auditoria
 
-- [ ] Registrar cada decision de routing.
-- [ ] Registrar por que se eligio una skill.
-- [ ] Registrar que contexto se entrego al especialista.
-- [ ] Registrar salida consolidada.
-- [ ] Registrar validaciones ejecutadas.
-- [ ] Crear fixtures para probar routing.
+- [x] Registrar cada decision de routing.
+- [x] Registrar por que se eligio una skill.
+- [x] Registrar que contexto se entrego al especialista.
+- [x] Registrar salida consolidada.
+- [x] Registrar validaciones ejecutadas.
+- [x] Crear fixtures para probar routing.
 
 ### 8. Testing de orquestador
 
 - [x] Crear `tests/fixtures/orchestrator-*`.
 - [x] Crear `tests/expected-output/orchestrator-*`.
 - [x] Crear `tests/actual-output/orchestrator-*` despues de ejecutar pruebas.
-- [ ] Extender `scripts/validate-fixtures.js` si hace falta.
+- [x] Extender suite de validacion con continuidad y CLI.
 - [x] Evaluar si el orquestador elige bien la skill.
 - [x] Evaluar si evita cargar contexto innecesario.
 - [x] Evaluar si sintetiza correctamente.
@@ -153,13 +153,13 @@ Casos minimos:
 - [x] Usuario pide "esta listo para produccion?".
 - [x] Usuario pide propuesta comercial ambigua.
 - [x] Usuario pide arquitectura con componentes mixtos FileNet/RPA/SQL.
-- [ ] Usuario pide investigar un bug sin saber causa.
+- [x] Usuario pide investigar un bug sin saber causa mediante continuidad/incidente.
 
 ### 9. CLI opcional `pstack`
 
-- [ ] Decidir si `pstack` se implementa en esta fase o queda posterior.
-- [ ] Si se implementa, crear comandos: `pstack ask`, `pstack route`, `pstack review`, `pstack ship`, `pstack proposal`.
-- [ ] `pstack ask` debe activar el orquestador, no una skill fija.
+- [x] Decidir si `pstack` se implementa en esta fase o queda posterior.
+- [x] Si se implementa, crear comandos: `pstack ask`, `pstack route`, `pstack review`, `pstack ship`, `pstack proposal`.
+- [x] `pstack ask` debe activar el orquestador, no una skill fija.
 
 ### 10. Criterios de aceptacion
 

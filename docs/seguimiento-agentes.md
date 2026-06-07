@@ -7,9 +7,9 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 - Proyecto: PortalUP Stack Codex.
 - Rama: `main`.
 - Roadmap fuente: `Roadmap Stack Codex Implementation.txt`.
-- Version objetivo: `v0.1.0`.
+- Version objetivo: `v0.2.0`.
 - Estrategia: adaptador limpio para Codex, no fork directo de GStack.
-- Estado actual de rama `main`: 24 skills y 16 fixtures con respuestas reales.
+- Estado actual de rama `main`: 24 skills, 20 fixtures con respuestas reales, continuidad persistente y CLI `pstack`.
 - GStack revisado: `https://github.com/garrytan/gstack.git`, commit `476b0ec59741fd69e4151ebee363a432d2b5c497`, version `1.56.1.0`, licencia MIT.
 - Nota critica: `vendor/gstack` es referencia local ignorada por Git. No se debe commitear.
 
@@ -23,8 +23,8 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 4. Capa PortalUP | Completo MVP | Skills FileNet, RPA, BPM, SQL, AWS backup, propuesta, incidente, arquitectura | 8 skills PortalUP creadas |
 | 5. Instalador local | Completo MVP | Scripts Windows/Linux | Scripts iniciales creados |
 | 6. Testing | Completo MVP | Fixtures y rubrica | 8 fixtures, salidas esperadas, respuestas reales, rubrica y validators |
-| 7. Orquestador autonomo | En progreso avanzado | Interprete de intencion, routing, continuidad y optimizacion de contexto | `portalup-orchestrator` creado y validado con 5 fixtures |
-| 8. CLI pstack | Pendiente | CLI opcional | No iniciado |
+| 7. Orquestador autonomo | Completo v0.2.0 | Interprete de intencion, routing, continuidad y optimizacion de contexto | `portalup-orchestrator`, continuidad persistente, CLI y validators creados |
+| 8. CLI pstack | Completo basico | CLI opcional | `scripts/pstack.*` genera prompts listos para Codex |
 | 9. Plugin Codex | Pendiente | Plugin distribuible | No iniciado |
 
 ## Decisiones tomadas
@@ -41,17 +41,17 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 - `.agents/skills`: carpeta local de skills Codex.
 - `scripts/validate-skills.js`: valida frontmatter, nombres, contenido minimo y metadata.
 - `scripts/validate-fixtures.js`: valida que fixtures y salidas esperadas esten pareados y apunten a skills reales.
+- `scripts/validate-actual-outputs.js`: valida respuestas reales de fixtures.
+- `scripts/validate-continuity.js`: valida plantillas y archivos base de continuidad persistente.
 - `scripts/install-local.ps1`: instala skills en `$env:USERPROFILE\.codex\skills`.
 - `scripts/install-local.sh`: instala skills en `${CODEX_HOME:-$HOME/.codex}/skills`.
 
 ## Proximos pasos recomendados
 
-1. Implementar Fase 2 avanzada: `portalup-orchestrator`.
-2. Crear taxonomia de intenciones, routing y politicas de contexto/tokens.
-3. Agregar fixtures de orquestacion y routing.
-4. Agregar fixtures negativos para secretos, acciones destructivas, rollback y permisos.
-5. Planificar CLI `pstack` o plugin Codex como fase posterior.
-6. Ampliar referencias de dominio para V1: FileNet, SQL, BPM y AWS.
+1. Ejecutar uso real de `0.2.0` en una aplicacion PortalUP.
+2. Ampliar referencias de dominio para V1: FileNet, SQL, BPM y AWS.
+3. Planificar plugin Codex distribuible.
+4. Evaluar Fase 3: browser, QA visual y memoria externa.
 
 ## Registro de cambios
 
@@ -70,3 +70,5 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 2026-06-07 | Codex | Se documento Fase 2 avanzada para orquestador autonomo, routing, continuidad y optimizacion de tokens | Pendiente implementar |
 | 2026-06-07 | Codex | Se agregaron skills expertas: arquitecto, comercial y marketing; fixtures y salidas esperadas/reales | Tres validadores passed |
 | 2026-06-07 | Codex | Se agrego `portalup-orchestrator` con routing natural, politica de contexto y 5 fixtures de prueba | Tres validadores passed |
+| 2026-06-07 | Codex | Se agrego continuidad persistente con `outputs/sessions`, plantillas de handoff/continuidad y `validate-continuity.js` | Pendiente validacion final |
+| 2026-06-07 | Codex | Se cerro `0.2.0` con `pstack`, `doctor`, `validate-all`, fixtures negativos y documentacion de Fase 3 futura | Pendiente publicacion final |

@@ -53,7 +53,7 @@ Pendientes para el siguiente especialista
 
 ## Resumen de continuidad
 
-Al cerrar una tarea larga, guardar:
+Al cerrar una tarea larga, guardar en `outputs/sessions/YYYY-MM-DD-tema-corto.md`:
 
 ```text
 Continuity Summary
@@ -87,6 +87,16 @@ Un agente debe compactar o transferir contexto cuando:
 - Se tocaron varios archivos.
 - El resumen ya puede reemplazar el historial conversacional.
 
+En esta arquitectura, un agente esta "cargado" cuando la conversacion contiene demasiadas decisiones, evidencia o cambios de etapa para que el siguiente paso pueda hacerse con precision sin compactar. No significa que el modelo falle; significa que el costo de seguir cargando historial supera el valor de resumir.
+
+Umbral recomendado:
+
+- Mas de una etapa de trabajo completada.
+- Mas de tres especialistas involucrados.
+- Mas de cinco decisiones relevantes.
+- Evidencia tecnica mezclada con conversacion comercial.
+- Riesgos abiertos que deben sobrevivir a otra sesion.
+
 ## Reglas anti-desperdicio
 
 - No repetir la misma evidencia a cada especialista si puede resumirse.
@@ -94,3 +104,9 @@ Un agente debe compactar o transferir contexto cuando:
 - No pasar conversaciones largas cuando bastan decisiones y archivos.
 - No usar una skill de dominio si el problema es generico.
 - No invocar seguridad como rutina si no hay superficie sensible, salvo antes de release.
+
+## Validacion
+
+```powershell
+node scripts\validate-continuity.js
+```

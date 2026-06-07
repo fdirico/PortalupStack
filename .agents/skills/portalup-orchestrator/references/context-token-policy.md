@@ -61,6 +61,18 @@ Next agent instructions
 - ...
 ```
 
+Persistent summaries should be saved under:
+
+```text
+outputs/sessions/YYYY-MM-DD-short-topic.md
+```
+
+Use:
+
+```text
+templates/continuity-summary.md
+```
+
 ## Anti-waste rules
 
 - Do not load every skill.
@@ -68,3 +80,4 @@ Next agent instructions
 - Do not call a domain expert for generic work.
 - Do not call security unless the surface is sensitive or release-bound.
 - Do not continue routing if the next specialist would only restate the same answer.
+- Do not store secrets, credentials, raw production dumps, or unnecessary personal data in session summaries.

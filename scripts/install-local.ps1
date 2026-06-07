@@ -24,6 +24,8 @@ New-Item -ItemType Directory -Force $Destination | Out-Null
 node (Join-Path $RepoRoot "scripts\validate-skills.js")
 node (Join-Path $RepoRoot "scripts\validate-fixtures.js")
 node (Join-Path $RepoRoot "scripts\validate-actual-outputs.js")
+node (Join-Path $RepoRoot "scripts\validate-continuity.js")
+node (Join-Path $RepoRoot "scripts\validate-cli.js")
 
 Get-ChildItem $Source -Directory | ForEach-Object {
   $Target = Join-Path $Destination $_.Name
@@ -35,3 +37,4 @@ Get-ChildItem $Source -Directory | ForEach-Object {
 }
 
 Write-Host "PortalUP Stack Codex skills installed in $Destination"
+node (Join-Path $RepoRoot "scripts\doctor.js")

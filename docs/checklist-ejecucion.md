@@ -21,7 +21,8 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [x] Actualizar base de conocimiento con comportamiento MVP.
 - [x] Preparar nota de release candidata `v0.1.0`.
 - [x] Aprobar y etiquetar release MVP `v0.1.0`.
-- [ ] Fase 2 avanzada: disenar orquestador autonomo e interprete de intencion.
+- [x] Fase 2 avanzada: disenar orquestador autonomo e interprete de intencion.
+- [x] Cerrar version `0.2.0` con continuidad, CLI, fixtures negativos y pruebas generales.
 
 ## Fase 1 - Discovery real de GStack
 
@@ -73,21 +74,33 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 
 ## Fase 5 - Orquestador autonomo sin browse
 
-- [ ] Crear taxonomia de intenciones humanas.
+- [x] Crear taxonomia de intenciones humanas.
 - [x] Crear skill `portalup-orchestrator`.
 - [x] Crear mapa de routing de intencion a skills.
 - [x] Crear experto arquitecto `portalup-arquitecto-experto`.
 - [x] Crear experto comercial `portalup-comercial-experto`.
 - [x] Crear experto marketing `portalup-marketing-experto`.
 - [x] Conectar expertos al routing del orquestador.
-- [ ] Definir niveles de autonomia.
-- [ ] Definir reglas de control de riesgo y cautela.
-- [ ] Crear politica de contexto minimo y presupuesto de tokens.
-- [ ] Crear formato de handoff entre especialistas.
-- [ ] Crear mecanismo de continuidad de sesion.
+- [x] Definir niveles de autonomia.
+- [x] Definir reglas de control de riesgo y cautela.
+- [x] Crear politica de contexto minimo y presupuesto de tokens.
+- [x] Crear formato de handoff entre especialistas.
+- [x] Crear mecanismo de continuidad de sesion.
+- [x] Crear validador de continuidad persistente.
 - [x] Crear fixtures de routing y orquestacion.
 - [x] Validar que el usuario pueda pedir tareas sin nombrar skills.
-- [ ] Excluir QA visual/browser de esta fase.
+- [x] Excluir QA visual/browser de esta fase.
+- [x] Crear CLI helper `pstack`.
+- [x] Crear doctor y validacion general.
+- [x] Crear fixtures negativos de secretos, acciones destructivas y ambiguedad comercial.
+
+## Fase 6 - Futura browser y memoria externa
+
+- [ ] QA visual con navegador real.
+- [ ] Browser automation.
+- [ ] Memoria externa tipo GBrain.
+- [ ] Coordinacion multiagente remota.
+- [ ] Plugin Codex distribuible.
 
 ## Registro rapido
 
@@ -108,3 +121,5 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | Checklist de Fase 2 avanzada creado en `docs/fase-2-orquestador-autonomo.md` | Pendiente implementar |
 | 2026-06-07 | Expertos arquitecto, comercial y marketing agregados como skills y conectados al routing | Validado: 23 skills / 11 fixtures |
 | 2026-06-07 | `portalup-orchestrator` agregado con 5 fixtures de routing natural | Pendiente completar continuidad persistente |
+| 2026-06-07 | Continuidad persistente agregada con `outputs/sessions`, plantillas y validador | Pendiente pruebas generales finales |
+| 2026-06-07 | Version `0.2.0` cerrada con CLI, doctor, validadores generales y fixtures negativos | Pendiente commit/tag |

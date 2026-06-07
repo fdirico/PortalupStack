@@ -15,8 +15,10 @@
 - Added v0.1.0 release candidate notes.
 - Added actual Codex fixture outputs and validation for evidence files.
 
-## 0.2.0 - In progress
+## 0.2.0 - 2026-06-07
 
 - Planned autonomous orchestrator phase.
 - Added expert advisory skills for architecture, commercial strategy, and marketing strategy.
 - Added `portalup-orchestrator` for natural-language routing, specialist selection, context planning, and continuity summaries.
+- Added persistent continuity templates, `outputs/sessions`, and continuity validation.
+- Added `pstack` prompt helper CLI, doctor, validation suite, negative safety fixtures, and v0.2.0 release notes.

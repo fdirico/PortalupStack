@@ -14,5 +14,7 @@ test -f "$REPO_ROOT/.agents/skills/$SKILL/SKILL.md"
 node "$REPO_ROOT/scripts/validate-skills.js"
 node "$REPO_ROOT/scripts/validate-fixtures.js"
 node "$REPO_ROOT/scripts/validate-actual-outputs.js"
+node "$REPO_ROOT/scripts/validate-continuity.js"
+node "$REPO_ROOT/scripts/validate-cli.js"
 echo "Fixture suggestions:"
 find "$REPO_ROOT/tests/fixtures" -type f -name "*.md" | sort

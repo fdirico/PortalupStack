@@ -16,6 +16,8 @@ mkdir -p "$DESTINATION"
 node "$REPO_ROOT/scripts/validate-skills.js"
 node "$REPO_ROOT/scripts/validate-fixtures.js"
 node "$REPO_ROOT/scripts/validate-actual-outputs.js"
+node "$REPO_ROOT/scripts/validate-continuity.js"
+node "$REPO_ROOT/scripts/validate-cli.js"
 
 for skill_path in "$SOURCE"/*; do
   [ -d "$skill_path" ] || continue
@@ -26,3 +28,4 @@ for skill_path in "$SOURCE"/*; do
 done
 
 echo "PortalUP Stack Codex skills installed in $DESTINATION"
+node "$REPO_ROOT/scripts/doctor.js"

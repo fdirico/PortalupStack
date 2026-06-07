@@ -101,9 +101,48 @@ Para validar estructura:
 node scripts\validate-skills.js
 node scripts\validate-fixtures.js
 node scripts\validate-actual-outputs.js
+node scripts\validate-continuity.js
+node scripts\validate-cli.js
+node scripts\validate-all.js
+node scripts\doctor.js
 ```
 
 La evaluacion real de calidad esta guardada en `tests/actual-output` y resumida en `docs/evaluacion-resultados.md`.
+
+## Continuidad entre agentes
+
+Para tareas largas o con varios especialistas, el orquestador debe crear un resumen persistente en `outputs/sessions/` usando `templates/continuity-summary.md`.
+
+Esto permite que otro agente retome con:
+
+- objetivo
+- hechos confirmados
+- decisiones
+- riesgos
+- pendientes
+- instrucciones para continuar
+
+El handoff entre especialistas usa `templates/agent-handoff.md`.
+
+## CLI `pstack`
+
+`pstack` no ejecuta Codex por si solo. Genera prompts listos para usar con PortalUP Stack.
+
+Ejemplo:
+
+```powershell
+.\scripts\pstack.ps1 ask "Quiero revisar si esta funcionalidad esta lista para produccion"
+```
+
+Comandos disponibles:
+
+- `ask`
+- `route`
+- `review`
+- `ship`
+- `proposal`
+- `marketing`
+- `architect`
 
 ## Relacion con GStack
 

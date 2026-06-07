@@ -37,6 +37,25 @@ Validate real fixture run evidence:
 node scripts\validate-actual-outputs.js
 ```
 
+Validate continuity and handoff templates:
+
+```powershell
+node scripts\validate-continuity.js
+```
+
+Run all validations:
+
+```powershell
+node scripts\validate-all.js
+node scripts\doctor.js
+```
+
+Use the prompt helper CLI:
+
+```powershell
+.\scripts\pstack.ps1 ask "Tengo un incidente FileNet en produccion y necesito continuidad para otro agente."
+```
+
 Install locally on Windows:
 
 ```powershell
@@ -77,6 +96,6 @@ This project now tracks GStack as a local, ignored discovery source under `vendo
 
 ## Version
 
-Current release: `v0.1.0`.
+Current release: `v0.2.0`.
 
-Current workstream: autonomous orchestration, expert advisory skills, and context-aware routing.
+Current workstream: general testing and preparation for future browser/memory capabilities.

@@ -22,7 +22,9 @@ Do not use it to bypass safety. If the request involves destructive actions, pro
 5. Select the minimum necessary specialists.
 6. Decide whether to answer directly, produce a plan, or hand off to specialists.
 7. Produce a consolidated output with next actions and continuity summary.
-8. Avoid loading every skill or repeating context unnecessarily.
+8. For long, risky, or multi-specialist work, create or update a continuity file in `outputs/sessions/` using `templates/continuity-summary.md`.
+9. Before handing work to another specialist, use `templates/agent-handoff.md` to compress context.
+10. Avoid loading every skill or repeating context unnecessarily.
 
 ## Output
 
@@ -63,6 +65,11 @@ Continuity summary
 - Risks:
 - Pending:
 - Next agent instructions:
+
+Persistent continuity
+- Save needed: yes | no
+- Suggested file: outputs/sessions/YYYY-MM-DD-short-topic.md
+- Template: templates/continuity-summary.md
 ```
 
 ## Checklist
@@ -74,6 +81,9 @@ Continuity summary
 - Unknowns are visible and not invented.
 - Context is minimized before specialist handoff.
 - Output includes continuity for future agents.
+- Long or multi-specialist tasks produce a persistent continuity recommendation.
+- Handoffs use `templates/agent-handoff.md`.
+- Session summaries use `templates/continuity-summary.md` and live under `outputs/sessions/`.
 
 ## References
 

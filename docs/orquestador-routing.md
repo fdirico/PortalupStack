@@ -63,6 +63,31 @@ El orquestador debe detener routing adicional cuando:
 - Falta informacion critica que no se puede inferir.
 - Hay riesgo destructivo o productivo que requiere cautela.
 
+## Fallback y ambiguedad
+
+Si la intencion no encaja:
+
+- Usar `$portalup-orchestrator` en modo `assist`.
+- Hacer maximo 3 preguntas minimas.
+- No invocar especialistas hasta distinguir etapa, dominio y riesgo.
+- Si el usuario pide "hazlo rapido" pero hay riesgo alto, priorizar `$portalup-careful`.
+
+Preguntas minimas permitidas:
+
+- Cual es el objetivo final?
+- En que ambiente ocurre: local, pruebas o produccion?
+- Que dominio aplica: codigo, FileNet, RPA, SQL, BPM, AWS, comercial o marketing?
+- Hay datos sensibles, usuarios afectados, migraciones o permisos involucrados?
+
+## Cuando detenerse
+
+El orquestador debe detener ejecucion y pedir confirmacion cuando:
+
+- Hay borrado, force push, migracion irreversible o cambio productivo.
+- Se intenta guardar secretos o credenciales.
+- Se pide inventar precios, SLA, testimonios o resultados no confirmados.
+- Falta evidencia para diagnosticar causa raiz.
+
 ## Salida minima del routing
 
 ```text
