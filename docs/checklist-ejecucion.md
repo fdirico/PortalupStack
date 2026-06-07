@@ -74,8 +74,8 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 ## Fase 5 - Orquestador autonomo sin browse
 
 - [ ] Crear taxonomia de intenciones humanas.
-- [ ] Crear skill `portalup-orchestrator`.
-- [ ] Crear mapa de routing de intencion a skills.
+- [x] Crear skill `portalup-orchestrator`.
+- [x] Crear mapa de routing de intencion a skills.
 - [x] Crear experto arquitecto `portalup-arquitecto-experto`.
 - [x] Crear experto comercial `portalup-comercial-experto`.
 - [x] Crear experto marketing `portalup-marketing-experto`.
@@ -85,8 +85,8 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [ ] Crear politica de contexto minimo y presupuesto de tokens.
 - [ ] Crear formato de handoff entre especialistas.
 - [ ] Crear mecanismo de continuidad de sesion.
-- [ ] Crear fixtures de routing y orquestacion.
-- [ ] Validar que el usuario pueda pedir tareas sin nombrar skills.
+- [x] Crear fixtures de routing y orquestacion.
+- [x] Validar que el usuario pueda pedir tareas sin nombrar skills.
 - [ ] Excluir QA visual/browser de esta fase.
 
 ## Registro rapido
@@ -107,3 +107,4 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | `main` y tag `v0.1.0` publicados en `origin` | Publicado |
 | 2026-06-07 | Checklist de Fase 2 avanzada creado en `docs/fase-2-orquestador-autonomo.md` | Pendiente implementar |
 | 2026-06-07 | Expertos arquitecto, comercial y marketing agregados como skills y conectados al routing | Validado: 23 skills / 11 fixtures |
+| 2026-06-07 | `portalup-orchestrator` agregado con 5 fixtures de routing natural | Pendiente completar continuidad persistente |

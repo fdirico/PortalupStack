@@ -19,3 +19,4 @@
 
 - Planned autonomous orchestrator phase.
 - Added expert advisory skills for architecture, commercial strategy, and marketing strategy.
+- Added `portalup-orchestrator` for natural-language routing, specialist selection, context planning, and continuity summaries.

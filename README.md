@@ -52,6 +52,7 @@ Install locally on Linux/macOS:
 After installation, invoke skills in Codex with names such as:
 
 - `$portalup-review`
+- `$portalup-orchestrator`
 - `$portalup-qa`
 - `$portalup-qa-only`
 - `$portalup-ship`
@@ -78,4 +79,4 @@ This project now tracks GStack as a local, ignored discovery source under `vendo
 
 Current release: `v0.1.0`.
 
-Current workstream: autonomous orchestration and expert advisory skills.
+Current workstream: autonomous orchestration, expert advisory skills, and context-aware routing.

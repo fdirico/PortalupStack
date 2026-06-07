@@ -47,21 +47,21 @@ En MVP avanzado, estos roles pueden estar en una sola skill `portalup-orchestrat
 
 ### 1. Definir taxonomia de intenciones
 
-- [ ] Crear matriz de intenciones del usuario.
-- [ ] Clasificar intenciones por etapa: idea, plan, implementacion, correccion, incidente, revision, QA, release, documentacion, propuesta.
-- [ ] Clasificar por dominio: general, FileNet, RPA, BPM, SQL, AWS, seguridad, arquitectura, comercial.
-- [ ] Clasificar por riesgo: bajo, medio, alto, critico.
-- [ ] Definir ejemplos de frases humanas y skill sugerida.
+- [x] Crear matriz de intenciones del usuario.
+- [x] Clasificar intenciones por etapa: idea, plan, implementacion, correccion, incidente, revision, QA, release, documentacion, propuesta.
+- [x] Clasificar por dominio: general, FileNet, RPA, BPM, SQL, AWS, seguridad, arquitectura, comercial.
+- [x] Clasificar por riesgo: bajo, medio, alto, critico.
+- [x] Definir ejemplos de frases humanas y skill sugerida.
 - [ ] Documentar ambiguedades frecuentes y preguntas minimas permitidas.
 
 ### 2. Crear skill `portalup-orchestrator`
 
-- [ ] Crear `.agents/skills/portalup-orchestrator/SKILL.md`.
-- [ ] Crear `.agents/skills/portalup-orchestrator/agents/openai.yaml`.
-- [ ] Definir que esta skill puede ser invocada implicitamente.
-- [ ] Incluir workflow de interpretacion: entender, clasificar, planear, enrutar, sintetizar, guardar continuidad.
-- [ ] Definir salida estandar: intencion detectada, especialistas seleccionados, plan, resultado consolidado, proximos pasos.
-- [ ] Agregar checklist para evitar sobreruteo y exceso de contexto.
+- [x] Crear `.agents/skills/portalup-orchestrator/SKILL.md`.
+- [x] Crear `.agents/skills/portalup-orchestrator/agents/openai.yaml`.
+- [x] Definir que esta skill puede ser invocada implicitamente.
+- [x] Incluir workflow de interpretacion: entender, clasificar, planear, enrutar, sintetizar, guardar continuidad.
+- [x] Definir salida estandar: intencion detectada, especialistas seleccionados, plan, resultado consolidado, proximos pasos.
+- [x] Agregar checklist para evitar sobreruteo y exceso de contexto.
 
 ### 2.1. Especialistas expertos consultivos
 
@@ -75,10 +75,10 @@ En MVP avanzado, estos roles pueden estar en una sola skill `portalup-orchestrat
 ### 3. Crear mapa de routing
 
 - [x] Crear `docs/orquestador-routing.md`.
-- [ ] Mapear cada skill existente a disparadores naturales.
-- [ ] Definir reglas de combinacion de skills.
-- [ ] Definir reglas de precedencia.
-- [ ] Definir reglas de stop: cuando no invocar mas especialistas.
+- [x] Mapear cada skill existente a disparadores naturales.
+- [x] Definir reglas de combinacion de skills.
+- [x] Definir reglas de precedencia.
+- [x] Definir reglas de stop: cuando no invocar mas especialistas.
 - [ ] Definir fallback: que hacer si la intencion no encaja.
 
 Ejemplos esperados:
@@ -94,9 +94,9 @@ Ejemplos esperados:
 
 ### 4. Disenar control de autonomia
 
-- [ ] Definir niveles de autonomia: `assist`, `route`, `execute`, `ship`.
-- [ ] Definir acciones que siempre requieren cautela: borrados, force push, cambios productivos, secretos, migraciones, credenciales.
-- [ ] Integrar reglas de `$portalup-careful`.
+- [x] Definir niveles de autonomia: `assist`, `route`, `execute`, `ship`.
+- [x] Definir acciones que siempre requieren cautela: borrados, force push, cambios productivos, secretos, migraciones, credenciales.
+- [x] Integrar reglas de `$portalup-careful`.
 - [ ] Documentar cuando el orquestador debe detenerse.
 
 ### 5. Gestion de contexto y tokens
@@ -138,21 +138,21 @@ Reglas base:
 
 ### 8. Testing de orquestador
 
-- [ ] Crear `tests/fixtures/orchestrator-*`.
-- [ ] Crear `tests/expected-output/orchestrator-*`.
-- [ ] Crear `tests/actual-output/orchestrator-*` despues de ejecutar pruebas.
+- [x] Crear `tests/fixtures/orchestrator-*`.
+- [x] Crear `tests/expected-output/orchestrator-*`.
+- [x] Crear `tests/actual-output/orchestrator-*` despues de ejecutar pruebas.
 - [ ] Extender `scripts/validate-fixtures.js` si hace falta.
-- [ ] Evaluar si el orquestador elige bien la skill.
-- [ ] Evaluar si evita cargar contexto innecesario.
-- [ ] Evaluar si sintetiza correctamente.
+- [x] Evaluar si el orquestador elige bien la skill.
+- [x] Evaluar si evita cargar contexto innecesario.
+- [x] Evaluar si sintetiza correctamente.
 
 Casos minimos:
 
-- [ ] Usuario pide "revisa este cambio" sin nombrar skill.
-- [ ] Usuario describe incidente FileNet sin nombrar FileNet como skill.
-- [ ] Usuario pide "esta listo para produccion?".
-- [ ] Usuario pide propuesta comercial ambigua.
-- [ ] Usuario pide arquitectura con componentes mixtos FileNet/RPA/SQL.
+- [x] Usuario pide "revisa este cambio" sin nombrar skill.
+- [x] Usuario describe incidente FileNet sin nombrar FileNet como skill.
+- [x] Usuario pide "esta listo para produccion?".
+- [x] Usuario pide propuesta comercial ambigua.
+- [x] Usuario pide arquitectura con componentes mixtos FileNet/RPA/SQL.
 - [ ] Usuario pide investigar un bug sin saber causa.
 
 ### 9. CLI opcional `pstack`
@@ -163,15 +163,15 @@ Casos minimos:
 
 ### 10. Criterios de aceptacion
 
-- [ ] El usuario puede escribir una necesidad en lenguaje natural sin nombrar skill.
-- [ ] El orquestador selecciona una o mas skills apropiadas.
-- [ ] El orquestador explica brevemente por que eligio esas skills.
-- [ ] El orquestador evita invocar especialistas innecesarios.
-- [ ] El orquestador produce un plan claro y accionable.
-- [ ] El orquestador genera resumen de continuidad.
-- [ ] El orquestador conserva decisiones, riesgos, archivos y pendientes.
-- [ ] El orquestador pasa validadores existentes.
-- [ ] El orquestador tiene fixtures y respuestas reales con score minimo 75/100.
+- [x] El usuario puede escribir una necesidad en lenguaje natural sin nombrar skill.
+- [x] El orquestador selecciona una o mas skills apropiadas.
+- [x] El orquestador explica brevemente por que eligio esas skills.
+- [x] El orquestador evita invocar especialistas innecesarios.
+- [x] El orquestador produce un plan claro y accionable.
+- [x] El orquestador genera resumen de continuidad.
+- [x] El orquestador conserva decisiones, riesgos, archivos y pendientes.
+- [x] El orquestador pasa validadores existentes.
+- [x] El orquestador tiene fixtures y respuestas reales con score minimo 75/100.
 
 ## Definicion de exito
 

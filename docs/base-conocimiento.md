@@ -19,6 +19,7 @@ La aplicacion no es un backend ni una UI tradicional. Es un paquete de conocimie
 | Skill | Uso principal |
 | --- | --- |
 | `$portalup-review` | Revisar codigo, arquitectura, riesgos y pruebas |
+| `$portalup-orchestrator` | Interpretar pedidos naturales, elegir especialistas y generar continuidad |
 | `$portalup-qa` | Crear planes de prueba y criterios de aceptacion |
 | `$portalup-qa-only` | Ejecutar QA report-only sin modificar codigo |
 | `$portalup-ship` | Preparar salida a produccion o release |
@@ -49,6 +50,14 @@ Ejemplo de review:
 ```text
 Usa $portalup-review para revisar los cambios de este modulo FastAPI antes de subir PR.
 ```
+
+Ejemplo orquestador:
+
+```text
+Tengo una funcionalidad con cambios de permisos y migracion. Quiero saber si esta lista para produccion.
+```
+
+El orquestador deberia detectar release readiness, seguridad y cautela, y derivar a `$portalup-ship`, `$portalup-cso`, `$portalup-careful` y `$portalup-document-release`.
 
 Ejemplo FileNet:
 

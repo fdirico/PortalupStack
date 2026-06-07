@@ -6,9 +6,9 @@ Este documento registra la evaluacion de fixtures del MVP. Las respuestas reales
 
 | Comando | Resultado | Alcance |
 | --- | --- | --- |
-| `node scripts\validate-skills.js` | OK | Valida estructura, frontmatter, secciones minimas y metadata `openai.yaml` de 23 skills |
-| `node scripts\validate-fixtures.js` | OK | Valida 11 fixtures, salidas esperadas asociadas y referencias a skills reales |
-| `node scripts\validate-actual-outputs.js` | OK | Valida 11 respuestas reales, score y cumplimiento contra salida esperada |
+| `node scripts\validate-skills.js` | OK | Valida estructura, frontmatter, secciones minimas y metadata `openai.yaml` de 24 skills |
+| `node scripts\validate-fixtures.js` | OK | Valida 16 fixtures, salidas esperadas asociadas y referencias a skills reales |
+| `node scripts\validate-actual-outputs.js` | OK | Valida 16 respuestas reales, score y cumplimiento contra salida esperada |
 
 ## Resultados reales
 
@@ -25,6 +25,11 @@ Este documento registra la evaluacion de fixtures del MVP. Las respuestas reales
 | `experto-arquitecto-modernizacion.md` | `$portalup-arquitecto-experto` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/experto-arquitecto-modernizacion.md` |
 | `experto-comercial-soporte.md` | `$portalup-comercial-experto` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/experto-comercial-soporte.md` |
 | `experto-marketing-aws-backup.md` | `$portalup-marketing-experto` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/experto-marketing-aws-backup.md` |
+| `orchestrator-review-users.md` | `$portalup-orchestrator` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/orchestrator-review-users.md` |
+| `orchestrator-filenet-incident.md` | `$portalup-orchestrator` | 91/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/orchestrator-filenet-incident.md` |
+| `orchestrator-commercial-marketing.md` | `$portalup-orchestrator` | 90/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/orchestrator-commercial-marketing.md` |
+| `orchestrator-production-ready.md` | `$portalup-orchestrator` | 91/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/orchestrator-production-ready.md` |
+| `orchestrator-architecture-mixed.md` | `$portalup-orchestrator` | 92/100 | 85/100 | Aprobado Fase 2 | `tests/actual-output/orchestrator-architecture-mixed.md` |
 
 ## Criterio de cierre MVP
 
