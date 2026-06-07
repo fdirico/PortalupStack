@@ -8,7 +8,7 @@ O más corto:
 pstack-codex
 Objetivo
 
-Crear una adaptación de GStack para que funcione sobre Codex, reutilizando la mayor cantidad posible de:
+Crear una adaptación de GStack (https://github.com/garrytan/gstack.git) para que funcione sobre Codex, reutilizando la mayor cantidad posible de:
 
 roles
 prompts
@@ -833,3 +833,10 @@ La decisión arquitectónica más importante sería esta:
 PortalUP Stack no debe ser un clon de GStack. Debe ser una distribución compatible con Codex, inspirada y parcialmente derivada de GStack, pero especializada en los servicios reales de PortalUP.
 
 Con ese enfoque, no estarías reinventando lo inventado. Estarías haciendo una adaptación profesional, reutilizable y con identidad propia.
+
+OBJETIVO FINAL Y CLARO:
+
+Algo que si me interesa es que sea totalmente autonomo. Aun no logro captar bien el concepto de GStack y de nuestra adapatacion, pero por lo que comentas, estas herramientas tienen varios agntes especializados que trabajan optimizadamente pero que yo debo invocarlos dependiendo lo que necesito hacer. Si quiero algo de filenet invoco a filene, si quiero de RPA invoco a RPA, si quiero algo de test invoco al del QA. Yo lo que pretendo es que tengamos un agente interprete, es decir alguien entienda al humano y sepa lo que quiere hacer. Seria como un orquestador, un dealer y que el derive la tarea al agente que le corresponda.
+Adicional quiero una herramienta totalmente que optimize el uso de token, recicle agentes que ya hayan tenido mucha tarea, tranfiera resumen de historial para la continuidad, etc.
+
+Logras captar la idea? Puedes orientar esta herrienta en eso?
