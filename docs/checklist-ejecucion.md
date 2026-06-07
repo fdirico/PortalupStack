@@ -21,6 +21,7 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [x] Actualizar base de conocimiento con comportamiento MVP.
 - [x] Preparar nota de release candidata `v0.1.0`.
 - [x] Aprobar y etiquetar release MVP `v0.1.0`.
+- [ ] Fase 2 avanzada: disenar orquestador autonomo e interprete de intencion.
 
 ## Fase 1 - Discovery real de GStack
 
@@ -70,6 +71,20 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [x] Crear `portalup-soporte-incidente`.
 - [x] Crear `portalup-arquitectura-solucion`.
 
+## Fase 5 - Orquestador autonomo sin browse
+
+- [ ] Crear taxonomia de intenciones humanas.
+- [ ] Crear skill `portalup-orchestrator`.
+- [ ] Crear mapa de routing de intencion a skills.
+- [ ] Definir niveles de autonomia.
+- [ ] Definir reglas de control de riesgo y cautela.
+- [ ] Crear politica de contexto minimo y presupuesto de tokens.
+- [ ] Crear formato de handoff entre especialistas.
+- [ ] Crear mecanismo de continuidad de sesion.
+- [ ] Crear fixtures de routing y orquestacion.
+- [ ] Validar que el usuario pueda pedir tareas sin nombrar skills.
+- [ ] Excluir QA visual/browser de esta fase.
+
 ## Registro rapido
 
 | Fecha | Avance | Estado |
@@ -86,3 +101,4 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | 8 respuestas reales guardadas en `tests/actual-output` y validadas | Todos los fixtures aprueban MVP |
 | 2026-06-07 | Release MVP etiquetado como `v0.1.0` | Tag local creado |
 | 2026-06-07 | `main` y tag `v0.1.0` publicados en `origin` | Publicado |
+| 2026-06-07 | Checklist de Fase 2 avanzada creado en `docs/fase-2-orquestador-autonomo.md` | Pendiente implementar |

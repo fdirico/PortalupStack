@@ -22,8 +22,9 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 4. Capa PortalUP | Completo MVP | Skills FileNet, RPA, BPM, SQL, AWS backup, propuesta, incidente, arquitectura | 8 skills PortalUP creadas |
 | 5. Instalador local | Completo MVP | Scripts Windows/Linux | Scripts iniciales creados |
 | 6. Testing | Completo MVP | Fixtures y rubrica | 8 fixtures, salidas esperadas, respuestas reales, rubrica y validators |
-| 7. CLI pstack | Pendiente | CLI opcional | No iniciado |
-| 8. Plugin Codex | Pendiente | Plugin distribuible | No iniciado |
+| 7. Orquestador autonomo | Planificado | Interprete de intencion, routing, continuidad y optimizacion de contexto | Checklist creado en `docs/fase-2-orquestador-autonomo.md` |
+| 8. CLI pstack | Pendiente | CLI opcional | No iniciado |
+| 9. Plugin Codex | Pendiente | Plugin distribuible | No iniciado |
 
 ## Decisiones tomadas
 
@@ -44,10 +45,12 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 
 ## Proximos pasos recomendados
 
-1. Agregar fixtures negativos para secretos, acciones destructivas, rollback y permisos.
-2. Definir si el instalador debe copiar tambien a `.agents/skills/gstack` para compatibilidad especifica.
-3. Planificar CLI `pstack` o plugin Codex como fase posterior.
-4. Ampliar referencias de dominio para V1: FileNet, SQL, BPM y AWS.
+1. Implementar Fase 2 avanzada: `portalup-orchestrator`.
+2. Crear taxonomia de intenciones, routing y politicas de contexto/tokens.
+3. Agregar fixtures de orquestacion y routing.
+4. Agregar fixtures negativos para secretos, acciones destructivas, rollback y permisos.
+5. Planificar CLI `pstack` o plugin Codex como fase posterior.
+6. Ampliar referencias de dominio para V1: FileNet, SQL, BPM y AWS.
 
 ## Registro de cambios
 
@@ -63,3 +66,4 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 2026-06-07 | Codex | Se creo nota de release candidata `docs/release-v0.1.0.md` y se ajusto documentacion de instalacion/contribucion | Pendiente prueba real de respuestas |
 | 2026-06-07 | Codex | Se ejecutaron los 8 fixtures, se guardaron respuestas reales en `tests/actual-output` y se agrego `scripts/validate-actual-outputs.js` | Tres validadores passed |
 | 2026-06-07 | Codex | Se creo commit, se etiqueto `v0.1.0` y se publico `main` + tag en `origin` | Publicado |
+| 2026-06-07 | Codex | Se documento Fase 2 avanzada para orquestador autonomo, routing, continuidad y optimizacion de tokens | Pendiente implementar |
