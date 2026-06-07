@@ -1,6 +1,6 @@
 # Release candidata v0.1.0
 
-Estado: candidata MVP, con prueba real de respuestas contra fixtures completada.
+Estado: release MVP `v0.1.0`, con prueba real de respuestas contra fixtures completada.
 
 ## Alcance incluido
 
@@ -60,6 +60,8 @@ Resultado:
 - Empaquetado como plugin Codex queda fuera del MVP y pasa a fase posterior.
 - Algunas skills de dominio necesitan referencias mas profundas para V1, especialmente FileNet, SQL, BPM y AWS.
 
-## Criterio para marcar release final
+## Cierre
 
-- Crear commit/tag de release cuando el usuario lo indique.
+- Commit de MVP creado.
+- Tag local `v0.1.0` creado.
+- Pendiente externo: push al remoto cuando corresponda.

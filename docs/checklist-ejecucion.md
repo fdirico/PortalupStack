@@ -20,7 +20,7 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [x] Validar evidencia con `node scripts/validate-actual-outputs.js`.
 - [x] Actualizar base de conocimiento con comportamiento MVP.
 - [x] Preparar nota de release candidata `v0.1.0`.
-- [ ] Aprobar y etiquetar release MVP `v0.1.0`.
+- [x] Aprobar y etiquetar release MVP `v0.1.0`.
 
 ## Fase 1 - Discovery real de GStack
 
@@ -84,3 +84,4 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | Skills BPM, AWS Backup y Arquitectura agregadas; suite sube a 20 skills y 8 fixtures | Validacion de contrato OK |
 | 2026-06-07 | Nota de release candidata `docs/release-v0.1.0.md` creada | Pendiente corrida real de fixtures |
 | 2026-06-07 | 8 respuestas reales guardadas en `tests/actual-output` y validadas | Todos los fixtures aprueban MVP |
+| 2026-06-07 | Release MVP etiquetado como `v0.1.0` | Tag local creado |
