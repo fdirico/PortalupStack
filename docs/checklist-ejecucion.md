@@ -85,3 +85,4 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | Nota de release candidata `docs/release-v0.1.0.md` creada | Pendiente corrida real de fixtures |
 | 2026-06-07 | 8 respuestas reales guardadas en `tests/actual-output` y validadas | Todos los fixtures aprueban MVP |
 | 2026-06-07 | Release MVP etiquetado como `v0.1.0` | Tag local creado |
+| 2026-06-07 | `main` y tag `v0.1.0` publicados en `origin` | Publicado |

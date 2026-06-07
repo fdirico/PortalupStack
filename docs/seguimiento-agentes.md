@@ -46,8 +46,8 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 
 1. Agregar fixtures negativos para secretos, acciones destructivas, rollback y permisos.
 2. Definir si el instalador debe copiar tambien a `.agents/skills/gstack` para compatibilidad especifica.
-3. Hacer push de `main` y tag `v0.1.0` al remoto cuando corresponda.
-4. Planificar CLI `pstack` o plugin Codex como fase posterior.
+3. Planificar CLI `pstack` o plugin Codex como fase posterior.
+4. Ampliar referencias de dominio para V1: FileNet, SQL, BPM y AWS.
 
 ## Registro de cambios
 
@@ -62,4 +62,4 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 2026-06-07 | Codex | Se agregaron skills PortalUP diferenciales faltantes: BPM, AWS Backup y Arquitectura de Solucion; total 20 skills y 8 fixtures | `node scripts/validate-skills.js` y `node scripts/validate-fixtures.js` passed |
 | 2026-06-07 | Codex | Se creo nota de release candidata `docs/release-v0.1.0.md` y se ajusto documentacion de instalacion/contribucion | Pendiente prueba real de respuestas |
 | 2026-06-07 | Codex | Se ejecutaron los 8 fixtures, se guardaron respuestas reales en `tests/actual-output` y se agrego `scripts/validate-actual-outputs.js` | Tres validadores passed |
-| 2026-06-07 | Codex | Se creo commit y tag local `v0.1.0` para el MVP | Pendiente push remoto |
+| 2026-06-07 | Codex | Se creo commit, se etiqueto `v0.1.0` y se publico `main` + tag en `origin` | Publicado |

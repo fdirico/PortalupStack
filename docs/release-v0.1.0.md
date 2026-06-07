@@ -64,4 +64,5 @@ Resultado:
 
 - Commit de MVP creado.
 - Tag local `v0.1.0` creado.
-- Pendiente externo: push al remoto cuando corresponda.
+- `main` publicado en `origin`.
+- Tag `v0.1.0` publicado en `origin`.
