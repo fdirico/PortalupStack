@@ -7,6 +7,9 @@ Use the fewest specialists that can produce a correct answer.
 | User intent | Specialists |
 | --- | --- |
 | Code/change review | `$portalup-review`; add `$portalup-cso` for sensitive auth, roles, secrets, data, IAM |
+| Professional application development or hardening | `$portalup-plan-eng-review` + `$portalup-quality-gate`; add `$portalup-ui-modernization` for frontend/user-facing work |
+| Sonar-like controls, code smells, maintainability | `$portalup-quality-gate`; add `$portalup-review` when code changes are needed |
+| UI modernization, look and feel, responsive design | `$portalup-ui-modernization`; add `$portalup-qa` for validation |
 | Production readiness | `$portalup-ship`; add `$portalup-cso` and `$portalup-document-release` when needed |
 | Unknown technical failure | `$portalup-investigate`; add domain skill after hypothesis |
 | Incident with client/user impact | `$portalup-soporte-incidente` + domain skill |
@@ -25,5 +28,6 @@ Use the fewest specialists that can produce a correct answer.
 1. Safety and production risk first.
 2. Investigation before fixes when cause is unclear.
 3. Domain expert before generic skill.
-4. Expert advisor before deliverable generator for strategy requests.
-5. Stop when one specialist is enough.
+4. Quality gate before claiming professional readiness.
+5. Expert advisor before deliverable generator for strategy requests.
+6. Stop when one specialist is enough.

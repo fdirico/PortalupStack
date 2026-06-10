@@ -1,0 +1,9 @@
+{
+  "engine": "claude",
+  "status": "validated-package",
+  "projectSkillTarget": ".claude/skills",
+  "userSkillTarget": "~/.claude/skills",
+  "repoInstructionFile": "CLAUDE.md",
+  "installer": "scripts/generate-host-assets.js --engine claude --write",
+  "doctor": "claude doctor"
+}

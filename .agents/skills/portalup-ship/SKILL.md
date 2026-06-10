@@ -56,10 +56,12 @@ Release notes
 
 ## Checklist
 
-- Tests passed or gaps are documented.
+- Tests passed or gaps are documented. **New module with zero tests = Blocked (no exceptions).**
 - Test failures are classified by ownership.
+- New export/CSV output includes injection protection — if absent, flag as Blocked.
+- New RBAC permission includes written justification for not reusing an existing one — if absent, flag as Needs work.
 - Required env vars are listed.
-- Migrations and seeds are accounted for.
+- Migrations and seeds are accounted for; preference for reusing existing permissions over new migrations.
 - Rollback path is possible.
 - Monitoring and smoke checks are defined.
 - Release notes are clear for technical and business stakeholders.

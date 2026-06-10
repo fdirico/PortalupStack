@@ -24,6 +24,9 @@ Build MVP `v0.1.0`:
 - Document every meaningful change in `docs/seguimiento-agentes.md`.
 - Keep user-facing usage guidance in `docs/base-conocimiento.md`.
 - Validate skills with `node scripts/validate-skills.js` before handoff.
+- Follow `docs/professional-delivery-standard.md` for client-grade architecture, code, QA, security, UI, and delivery work.
+- Challenge under-specified or weak requests instead of implementing guesses that would produce mediocre software.
+- Prefer durable root-cause fixes over cosmetic patches or warning suppression.
 
 ## Commands
 

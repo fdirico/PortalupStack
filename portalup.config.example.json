@@ -1,0 +1,26 @@
+{
+  "version": "0.3.0-draft",
+  "engine": "codex",
+  "mode": "autonomous",
+  "defaultSkill": "portalup-orchestrator",
+  "contextPolicy": "compact-and-handoff",
+  "handoff": {
+    "enabled": true,
+    "template": "templates/continuity-summary.md",
+    "sessionOutputDir": "outputs/sessions"
+  },
+  "engines": {
+    "codex": {
+      "enabled": true,
+      "adapter": "core/adapters/codex/adapter.md"
+    },
+    "claude": {
+      "enabled": false,
+      "adapter": "core/adapters/claude/adapter.md"
+    },
+    "cursor": {
+      "enabled": false,
+      "adapter": "core/adapters/cursor/adapter.md"
+    }
+  }
+}

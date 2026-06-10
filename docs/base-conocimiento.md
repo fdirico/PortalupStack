@@ -22,6 +22,8 @@ La aplicacion no es un backend ni una UI tradicional. Es un paquete de conocimie
 | `$portalup-orchestrator` | Interpretar pedidos naturales, elegir especialistas y generar continuidad |
 | `$portalup-qa` | Crear planes de prueba y criterios de aceptacion |
 | `$portalup-qa-only` | Ejecutar QA report-only sin modificar codigo |
+| `$portalup-quality-gate` | Validar calidad profesional tipo Sonar: arquitectura, codigo, mantenibilidad, tests, seguridad y robustez |
+| `$portalup-ui-modernization` | Modernizar UI/UX, layout, menus, graficas, responsive y look and feel profesional |
 | `$portalup-ship` | Preparar salida a produccion o release |
 | `$portalup-cso` | Revisar seguridad, secretos, permisos e infraestructura |
 | `$portalup-document-generate` | Crear documentacion tecnica, funcional, runbooks y release notes |
@@ -103,6 +105,7 @@ node scripts\validate-fixtures.js
 node scripts\validate-actual-outputs.js
 node scripts\validate-continuity.js
 node scripts\validate-cli.js
+node scripts\validate-runtime.js
 node scripts\validate-all.js
 node scripts\doctor.js
 ```
@@ -143,6 +146,66 @@ Comandos disponibles:
 - `proposal`
 - `marketing`
 - `architect`
+- `quality`
+- `modernize`
+- `compact`
+- `handoff`
+- `continue`
+
+## Optimizacion de tokens y reciclaje
+
+PortalUP Stack Codex usa `docs/context-ops-protocol.md` como contrato operativo para ahorrar tokens. En tareas medianas o grandes, el orquestador debe declarar que conserva, que resume, que descarta y que deja bajo demanda.
+
+Los comandos `pstack compact`, `pstack handoff` y `pstack continue` ayudan a reciclar agentes y transferir conocimiento entre sesiones sin cargar todo el historial.
+
+## Runtime Multi-LLM
+
+PortalUP Stack esta evolucionando para separar el metodo PortalUP del motor LLM activo.
+
+La idea base es:
+
+```text
+PortalUP Stack Core + adaptador activo = experiencia PortalUP en Codex, Claude Code u otro host
+```
+
+La Etapa 1 crea el contrato declarativo:
+
+- `portalup.config.example.json`
+- `core/registry/skills.registry.json`
+- `core/registry/engines.registry.json`
+- `core/adapters/codex/adapter.md`
+- `core/adapters/claude/adapter.md`
+- `core/runtime/engine-contract.md`
+- `docs/arquitectura-multi-llm.md`
+- `docs/roadmap-multi-llm.md`
+- `docs/checklist-multi-llm.md`
+- `docs/host-assets-generator.md`
+- `docs/claude-code-adapter.md`
+- `docs/continuidad-codex-claude.md`
+
+Por ahora Codex sigue siendo el host operativo principal. Claude Code ya tiene paquete de proyecto validado documentalmente con `.claude/skills`, pendiente de prueba real en Claude Code.
+
+Para generar paquetes por engine:
+
+```powershell
+node scripts\generate-host-assets.js --engine codex --dry-run
+node scripts\generate-host-assets.js --engine codex --write
+node scripts\generate-host-assets.js --engine claude --write
+node scripts\generate-host-assets.js --engine cursor --write
+```
+
+Los paquetes se generan en `dist/host-assets/<engine>` y no se instalan automaticamente.
+
+Para instalar PortalUP Stack en un proyecto Claude Code:
+
+```powershell
+.\scripts\install-claude-project.ps1 "D:\ruta\de\tu-proyecto" -DryRun
+.\scripts\install-claude-project.ps1 "D:\ruta\de\tu-proyecto" -Force
+```
+
+## Estandar profesional
+
+PortalUP Stack Codex no debe ser complaciente con pedidos incompletos que produzcan aplicaciones mediocres. Para trabajo de clientes grandes, debe aplicar `docs/professional-delivery-standard.md`, pedir contexto cuando haga falta, cuestionar enfoques debiles y usar `$portalup-quality-gate` y `$portalup-ui-modernization` cuando el resultado dependa de calidad tecnica o experiencia de usuario.
 
 ## Relacion con GStack
 

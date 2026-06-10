@@ -10,6 +10,7 @@ const validators = [
   "validate-actual-outputs.js",
   "validate-continuity.js",
   "validate-cli.js",
+  "validate-runtime.js",
 ];
 
 for (const validator of validators) {

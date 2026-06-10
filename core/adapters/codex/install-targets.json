@@ -1,0 +1,7 @@
+{
+  "engine": "codex",
+  "skillTarget": "%USERPROFILE%/.codex/skills",
+  "repoInstructionFile": "AGENTS.md",
+  "installer": "scripts/install-local.ps1",
+  "doctor": "scripts/doctor.js"
+}

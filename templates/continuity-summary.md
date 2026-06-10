@@ -38,3 +38,6 @@
 - Keep:
 - Summarize:
 - Drop:
+- Load on demand:
+- Recycling trigger:
+- Efficiency score:

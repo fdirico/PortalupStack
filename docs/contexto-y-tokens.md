@@ -6,6 +6,10 @@ Este documento define como PortalUP Stack Codex debe optimizar contexto cuando u
 
 El mejor uso de tokens no es cargar todo. Es entregar a cada especialista el contexto minimo suficiente para decidir bien.
 
+## Protocolo operativo
+
+El contrato detallado vive en `docs/context-ops-protocol.md`. Ese protocolo convierte la politica de contexto en reglas verificables: clases de presupuesto, disparadores de reciclaje, ledger de contexto, reglas de handoff y score de eficiencia.
+
 ## Presupuesto por tarea
 
 | Tamano | Uso | Contexto permitido |
@@ -97,6 +101,14 @@ Umbral recomendado:
 - Evidencia tecnica mezclada con conversacion comercial.
 - Riesgos abiertos que deben sobrevivir a otra sesion.
 
+Disparadores operativos obligatorios:
+
+- Cambio de especialista.
+- Cambio de etapa.
+- Mas de cinco decisiones relevantes.
+- Mas de tres especialistas candidatos.
+- La siguiente accion puede ejecutarse desde resumen + referencias.
+
 ## Reglas anti-desperdicio
 
 - No repetir la misma evidencia a cada especialista si puede resumirse.
@@ -104,6 +116,28 @@ Umbral recomendado:
 - No pasar conversaciones largas cuando bastan decisiones y archivos.
 - No usar una skill de dominio si el problema es generico.
 - No invocar seguridad como rutina si no hay superficie sensible, salvo antes de release.
+
+## Ledger de contexto
+
+Cada handoff o resumen de continuidad debe declarar:
+
+- Keep: hechos, decisiones, archivos, comandos, riesgos y criterios de aceptacion.
+- Summarize: historial conversacional, racional repetido y exploraciones descartadas.
+- Drop: saludos, duplicados, ramas irrelevantes e hipotesis obsoletas.
+- Load on demand: docs largas, referencias vendor, playbooks de dominio y logs crudos.
+
+## Score de eficiencia
+
+Una ejecucion eficiente debe alcanzar 80/100:
+
+| Dimension | Puntos |
+| --- | ---: |
+| Especialistas minimos utiles | 20 |
+| Ledger keep/summarize/drop/load-on-demand claro | 20 |
+| Handoff antes de cambiar especialista o etapa | 20 |
+| Continuidad recomendada o actualizada cuando aplica | 20 |
+| Secretos y datos sensibles excluidos | 10 |
+| Validaciones o evidencia registradas | 10 |
 
 ## Validacion
 

@@ -19,7 +19,7 @@ Do not use it to bypass safety. If the request involves destructive actions, pro
 2. Classify intent, stage, domain, risk, autonomy level, and missing information.
 3. Read `references/routing-summary.md` when routing is not obvious.
 4. Read `references/context-token-policy.md` for medium/large tasks or when multiple specialists are needed.
-5. Select the minimum necessary specialists.
+5. Select the minimum necessary specialists; always include `$portalup-ui-modernization` when any screen, component, menu, or layout is touched — this is not optional; include `$portalup-quality-gate` for client-grade readiness.
 6. Decide whether to answer directly, produce a plan, or hand off to specialists.
 7. Produce a consolidated output with next actions and continuity summary.
 8. For long, risky, or multi-specialist work, create or update a continuity file in `outputs/sessions/` using `templates/continuity-summary.md`.
@@ -36,7 +36,7 @@ Stage
 - idea | plan | implementation | correction | incident | review | release | documentation | commercial | marketing
 
 Domain
-- general | FileNet | RPA | BPM | SQL | AWS | security | architecture | commercial | marketing
+- general | FileNet | RPA | BPM | SQL | AWS | security | architecture | quality | UI/UX | commercial | marketing
 
 Risk
 - low | medium | high | critical
@@ -79,6 +79,13 @@ Persistent continuity
 - The fewest useful specialists are selected.
 - High-risk work routes through `$portalup-careful`.
 - Unknowns are visible and not invented.
+- Under-specified professional work is challenged or clarified before implementation.
+- New features, new modules, new screens, or vague requests always route through `$portalup-spec` FIRST, before `$portalup-autoplan`. Implementation never starts without a confirmed spec saved to `docs/<topic>-spec.md`.
+- Any task touching a screen, component, menu, or layout always routes through `$portalup-ui-modernization`.
+- New modules and multi-file features always use `$portalup-autoplan` and produce a `docs/<topic>-plan.md`.
+- New modules must include tests — if the implementation plan has no test strategy, flag it as a blocker before coding starts.
+- RBAC: before creating a new permission, state why an existing one cannot be reused.
+- Export features: state the CSV/data injection protection approach.
 - Context is minimized before specialist handoff.
 - Output includes continuity for future agents.
 - Long or multi-specialist tasks produce a persistent continuity recommendation.

@@ -41,6 +41,9 @@ requireSections("templates/continuity-summary.md", [
   "## Files Or Evidence",
   "## Next Agent Instructions",
   "## Token Budget",
+  "Load on demand",
+  "Recycling trigger",
+  "Efficiency score",
 ]);
 
 requireSections("templates/agent-handoff.md", [
@@ -53,6 +56,16 @@ requireSections("templates/agent-handoff.md", [
   "## Open Risks",
   "## Pending Work For Next Specialist",
   "## Token Notes",
+  "Context to summarize",
+  "Recycling trigger",
+]);
+
+requireSections("docs/context-ops-protocol.md", [
+  "# Context Ops Protocol",
+  "## Token Budget Classes",
+  "## Recycling Triggers",
+  "## Context Ledger",
+  "## Efficiency Score",
 ]);
 
 requireSections("outputs/sessions/README.md", [
@@ -83,6 +96,14 @@ if (!orchestrator.includes("templates/continuity-summary.md")) {
 }
 if (!orchestrator.includes("templates/agent-handoff.md")) {
   fail("portalup-orchestrator must mention templates/agent-handoff.md.");
+}
+if (!orchestrator.includes("references/context-token-policy.md")) {
+  fail("portalup-orchestrator must mention references/context-token-policy.md.");
+}
+
+const tokenPolicy = requireFile(".agents/skills/portalup-orchestrator/references/context-token-policy.md");
+for (const token of ["Context ledger", "Recycling triggers", "Efficiency score"]) {
+  if (!tokenPolicy.includes(token)) fail(`context-token-policy.md must mention ${token}.`);
 }
 
 if (errors.length) {

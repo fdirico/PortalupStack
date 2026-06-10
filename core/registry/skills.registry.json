@@ -1,0 +1,32 @@
+{
+  "version": "0.1.0",
+  "defaultSkill": "portalup-orchestrator",
+  "skills": [
+    "portalup-orchestrator",
+    "portalup-review",
+    "portalup-qa",
+    "portalup-qa-only",
+    "portalup-ship",
+    "portalup-cso",
+    "portalup-careful",
+    "portalup-investigate",
+    "portalup-document-generate",
+    "portalup-document-release",
+    "portalup-plan-eng-review",
+    "portalup-plan-ceo-review",
+    "portalup-autoplan",
+    "portalup-filenet-review",
+    "portalup-rpa-review",
+    "portalup-bpm-review",
+    "portalup-sql-review",
+    "portalup-aws-backup-review",
+    "portalup-arquitectura-solucion",
+    "portalup-arquitecto-experto",
+    "portalup-comercial-experto",
+    "portalup-marketing-experto",
+    "portalup-propuesta-comercial",
+    "portalup-soporte-incidente",
+    "portalup-quality-gate",
+    "portalup-ui-modernization"
+  ]
+}

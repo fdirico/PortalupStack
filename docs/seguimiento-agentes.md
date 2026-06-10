@@ -8,8 +8,9 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 - Rama: `main`.
 - Roadmap fuente: `Roadmap Stack Codex Implementation.txt`.
 - Version objetivo: `v0.2.0`.
-- Estrategia: adaptador limpio para Codex, no fork directo de GStack.
+- Estrategia: adaptador limpio para Codex y evolucion hacia Runtime Multi-LLM, no fork directo de GStack.
 - Estado actual de rama `main`: 24 skills, 20 fixtures con respuestas reales, continuidad persistente y CLI `pstack`.
+- Runtime Multi-LLM: Etapa 3 avanzada con Claude Code adapter validado documentalmente contra `.claude/skills`, instalador de proyecto, fixture Codex -> Claude y validador.
 - GStack revisado: `https://github.com/garrytan/gstack.git`, commit `476b0ec59741fd69e4151ebee363a432d2b5c497`, version `1.56.1.0`, licencia MIT.
 - Nota critica: `vendor/gstack` es referencia local ignorada por Git. No se debe commitear.
 
@@ -26,6 +27,7 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 7. Orquestador autonomo | Completo v0.2.0 | Interprete de intencion, routing, continuidad y optimizacion de contexto | `portalup-orchestrator`, continuidad persistente, CLI y validators creados |
 | 8. CLI pstack | Completo basico | CLI opcional | `scripts/pstack.*` genera prompts listos para Codex |
 | 9. Plugin Codex | Pendiente | Plugin distribuible | No iniciado |
+| 10. Runtime Multi-LLM | Etapa 3 en ejecucion | Core portable, adapters, config, paquetes por host y continuidad entre motores | Claude adapter actualizado a `.claude/skills`; instalador y fixture creados; pendiente prueba real |
 
 ## Decisiones tomadas
 
@@ -50,8 +52,11 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 
 1. Ejecutar uso real de `0.2.0` en una aplicacion PortalUP.
 2. Ampliar referencias de dominio para V1: FileNet, SQL, BPM y AWS.
-3. Planificar plugin Codex distribuible.
-4. Evaluar Fase 3: browser, QA visual y memoria externa.
+3. Probar instalador Claude en una sesion real de Claude Code.
+4. Validar resultado de continuidad Codex -> Claude con handoff real.
+5. Agregar comando para cambiar engine configurado desde CLI.
+7. Planificar plugin Codex distribuible.
+8. Evaluar browser, QA visual y memoria externa.
 
 ## Registro de cambios
 
@@ -72,3 +77,8 @@ Este documento sirve como bitacora de continuidad para cualquier agente que reto
 | 2026-06-07 | Codex | Se agrego `portalup-orchestrator` con routing natural, politica de contexto y 5 fixtures de prueba | Tres validadores passed |
 | 2026-06-07 | Codex | Se agrego continuidad persistente con `outputs/sessions`, plantillas de handoff/continuidad y `validate-continuity.js` | Pendiente validacion final |
 | 2026-06-07 | Codex | Se cerro `0.2.0` con `pstack`, `doctor`, `validate-all`, fixtures negativos y documentacion de Fase 3 futura | Pendiente publicacion final |
+| 2026-06-07 | Codex | Se preparo `0.3.0` con quality gate profesional, modernizacion UI/UX, estandar de delivery, routing y fixtures | `node scripts\doctor.js` passed: 26 skills / 22 fixtures |
+| 2026-06-08 | Codex | Se inicio Runtime Multi-LLM con arquitectura, roadmap, plan, config ejemplo, skill registry, adapters Codex/Claude y `validate-runtime.js` | `node scripts\validate-runtime.js` passed |
+| 2026-06-08 | Codex | Se agrego `scripts/generate-host-assets.js`, paquetes Codex/Claude/Cursor, comandos `pstack engine/runtime/package` y guia de host assets | Pendiente validacion final |
+| 2026-06-08 | Codex | Se verifico formato oficial Claude Code Skills, se actualizo adapter Claude a `.claude/skills` y se agrego guia `docs/claude-code-adapter.md` | Pendiente validacion final |
+| 2026-06-09 | Codex | Se agrego instalador Claude por proyecto, lectura de `portalup.config.json` real en `pstack` y fixture Codex -> Claude | Pendiente validacion final |

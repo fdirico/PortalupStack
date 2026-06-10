@@ -1,0 +1,38 @@
+{
+  "version": "0.1.0",
+  "engines": {
+    "codex": {
+      "status": "baseline",
+      "adapter": "core/adapters/codex/adapter.md",
+      "supports": {
+        "fileRead": true,
+        "fileWrite": true,
+        "commandExecution": true,
+        "nativeSkills": true,
+        "handoff": true
+      }
+    },
+    "claude": {
+      "status": "validated-package",
+      "adapter": "core/adapters/claude/adapter.md",
+      "supports": {
+        "fileRead": true,
+        "fileWrite": true,
+        "commandExecution": true,
+        "nativeSkills": true,
+        "handoff": true
+      }
+    },
+    "cursor": {
+      "status": "planned",
+      "adapter": "core/adapters/cursor/adapter.md",
+      "supports": {
+        "fileRead": true,
+        "fileWrite": true,
+        "commandExecution": "host-dependent",
+        "nativeSkills": "to-be-defined",
+        "handoff": true
+      }
+    }
+  }
+}

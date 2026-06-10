@@ -31,5 +31,7 @@
 ## Token Notes
 
 - Context to keep:
+- Context to summarize:
 - Context to drop:
 - References to load only if needed:
+- Recycling trigger:

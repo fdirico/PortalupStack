@@ -12,8 +12,9 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 | --- | --- | --- |
 | Idea o alcance | "quiero hacer", "se me ocurre", "como lo planteamos" | `$portalup-autoplan`, `$portalup-plan-ceo-review`, `$portalup-arquitecto-experto` |
 | Plan tecnico | "disena", "arquitectura", "como implemento" | `$portalup-arquitecto-experto`, `$portalup-plan-eng-review`, `$portalup-arquitectura-solucion`, `$portalup-cso` |
-| Implementacion | "haz", "implementa", "corrige", "ajusta" | `$portalup-investigate`, `$portalup-review`, skill de dominio |
-| Revision | "revisa", "antes de subir", "esta bien?" | `$portalup-review`, `$portalup-cso`, `$portalup-qa` |
+| Implementacion | "haz", "implementa", "corrige", "ajusta" | `$portalup-plan-eng-review`, `$portalup-investigate`, `$portalup-review`, `$portalup-quality-gate`, skill de dominio |
+| Revision | "revisa", "antes de subir", "esta bien?", "tipo sonar" | `$portalup-review`, `$portalup-quality-gate`, `$portalup-cso`, `$portalup-qa` |
+| Modernizacion UI | "moderno", "look and feel", "responsive", "dashboard", "menu", "3D", "graficas", "sliders" | `$portalup-ui-modernization`, `$portalup-qa`, `$portalup-quality-gate` |
 | Incidente | "fallo", "error", "produccion", "usuarios afectados" | `$portalup-soporte-incidente`, `$portalup-investigate`, skill de dominio |
 | Release | "produccion", "deploy", "listo para salir" | `$portalup-ship`, `$portalup-cso`, `$portalup-document-release` |
 | Documentacion | "documenta", "manual", "runbook" | `$portalup-document-generate`, `$portalup-document-release` |
@@ -31,6 +32,8 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 | AWS Backup | S3, IAM, KMS, backup, restore, retention, lifecycle | `$portalup-aws-backup-review` |
 | Seguridad | secretos, permisos, auth, roles, IAM, datos sensibles | `$portalup-cso` |
 | Arquitectura | solucion, componentes, integracion, fases, operacion, tradeoff, modernizacion | `$portalup-arquitecto-experto` |
+| Calidad profesional | Sonar, code smells, deuda tecnica, calidad, mantenibilidad, robustez | `$portalup-quality-gate` |
+| UI/UX | look and feel, responsive, menu, dashboard, botones, graficas, 3D, sliders | `$portalup-ui-modernization` |
 | Comercial | oportunidad, comprador, presupuesto, valor, alcance, SLA, negociacion | `$portalup-comercial-experto` |
 | Marketing | ICP, audiencia, posicionamiento, mensaje, campana, contenido, canales | `$portalup-marketing-experto` |
 
@@ -39,6 +42,9 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 - Incidente + dominio: usar `$portalup-soporte-incidente` + skill de dominio.
 - Produccion + cambio tecnico: usar `$portalup-ship` + `$portalup-cso`.
 - Cambio de codigo sensible: usar `$portalup-review` + `$portalup-cso`.
+- App profesional o cliente grande: usar `$portalup-plan-eng-review` + `$portalup-quality-gate`; sumar `$portalup-ui-modernization` si hay frontend.
+- Controles tipo Sonar: usar `$portalup-quality-gate`; sumar `$portalup-review` para fixes de codigo.
+- Modernizacion visual: usar `$portalup-ui-modernization`; sumar `$portalup-qa` para validacion responsive/UX.
 - Problema sin causa clara: usar `$portalup-investigate` antes de proponer fix.
 - Arquitectura estrategica: usar `$portalup-arquitecto-experto` antes de `$portalup-arquitectura-solucion`.
 - Propuesta tecnica/comercial: usar `$portalup-comercial-experto` + `$portalup-propuesta-comercial`; sumar `$portalup-arquitecto-experto` si hay complejidad tecnica.
@@ -52,7 +58,8 @@ El usuario no necesita nombrar skills. El orquestador debe inferir intencion, do
 3. Investigacion prevalece sobre correccion cuando no hay causa clara.
 4. Dominio especializado prevalece sobre skill generica.
 5. Si hay ambiguedad de alcance comercial, no inventar precio ni SLA.
-6. Si el usuario pide estrategia, usar experto consultivo antes de generador de entregable.
+6. Calidad profesional prevalece sobre velocidad cuando se construye para clientes grandes.
+7. Si el usuario pide estrategia, usar experto consultivo antes de generador de entregable.
 
 ## Reglas de stop
 
@@ -62,6 +69,7 @@ El orquestador debe detener routing adicional cuando:
 - La siguiente skill solo agregaria texto repetido.
 - Falta informacion critica que no se puede inferir.
 - Hay riesgo destructivo o productivo que requiere cautela.
+- Falta informacion clave de UX/arquitectura y una suposicion produciria software mediocre.
 
 ## Fallback y ambiguedad
 

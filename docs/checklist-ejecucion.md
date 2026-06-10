@@ -71,6 +71,8 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [x] Crear `portalup-propuesta-comercial`.
 - [x] Crear `portalup-soporte-incidente`.
 - [x] Crear `portalup-arquitectura-solucion`.
+- [x] Crear `portalup-quality-gate` para controles profesionales tipo Sonar.
+- [x] Crear `portalup-ui-modernization` para modernizacion visual y UX profesional.
 
 ## Fase 5 - Orquestador autonomo sin browse
 
@@ -86,6 +88,8 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [x] Crear politica de contexto minimo y presupuesto de tokens.
 - [x] Crear formato de handoff entre especialistas.
 - [x] Crear mecanismo de continuidad de sesion.
+- [x] Crear protocolo auditable de Context Ops para ahorro de tokens y reciclaje de agentes.
+- [x] Crear informe de validacion competitiva frente a GStack.
 - [x] Crear validador de continuidad persistente.
 - [x] Crear fixtures de routing y orquestacion.
 - [x] Validar que el usuario pueda pedir tareas sin nombrar skills.
@@ -101,6 +105,31 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 - [ ] Memoria externa tipo GBrain.
 - [ ] Coordinacion multiagente remota.
 - [ ] Plugin Codex distribuible.
+
+## Fase 7 - Runtime Multi-LLM independiente del host
+
+- [x] Crear arquitectura Multi-LLM con diagrama Markdown.
+- [x] Crear roadmap de ejecucion Multi-LLM.
+- [x] Crear plan de trabajo por etapas.
+- [x] Crear `portalup.config.example.json`.
+- [x] Crear registro canonico `core/registry/skills.registry.json`.
+- [x] Crear registro de motores `core/registry/engines.registry.json`.
+- [x] Crear adaptador descriptivo `core/adapters/codex/adapter.md`.
+- [x] Crear adaptador descriptivo `core/adapters/claude/adapter.md`.
+- [x] Crear placeholder `core/adapters/cursor/adapter.md`.
+- [x] Crear contratos y politicas `core/runtime`.
+- [x] Crear `core/README.md`.
+- [x] Crear `scripts/validate-runtime.js`.
+- [x] Ejecutar `node scripts\validate-runtime.js`.
+- [x] Integrar runtime en `scripts/validate-all.js`.
+- [x] Actualizar documentacion de uso y seguimiento.
+- [x] Crear generador de assets por host.
+- [x] Generar paquetes Codex, Claude y Cursor en `dist/host-assets`.
+- [x] Agregar comandos `pstack engine`, `pstack runtime` y `pstack package`.
+- [x] Leer `portalup.config.json` real desde CLI.
+- [ ] Permitir cambiar engine configurado desde `pstack`.
+- [x] Crear fixture de continuidad Codex -> Claude.
+- [ ] Validar continuidad entre motores con prueba real.
 
 ## Registro rapido
 
@@ -123,3 +152,15 @@ Este checklist controla el avance real del proyecto PortalUP Stack Codex.
 | 2026-06-07 | `portalup-orchestrator` agregado con 5 fixtures de routing natural | Pendiente completar continuidad persistente |
 | 2026-06-07 | Continuidad persistente agregada con `outputs/sessions`, plantillas y validador | Pendiente pruebas generales finales |
 | 2026-06-07 | Version `0.2.0` cerrada con CLI, doctor, validadores generales y fixtures negativos | Pendiente commit/tag |
+| 2026-06-08 | Etapa 1 Multi-LLM iniciada con Core declarativo, config ejemplo, adaptadores Codex/Claude y validador runtime | En validacion |
+| 2026-06-08 | Etapa 2 Multi-LLM avanzada con generador de assets por host y comandos runtime en `pstack` | En validacion |
+| 2026-06-08 | Etapa 3 Multi-LLM iniciada con adapter Claude validado contra `.claude/skills` y paquete actualizado | En validacion |
+| 2026-06-09 | Instalador Claude por proyecto, lectura de config real y fixture Codex -> Claude agregados | En validacion |
+# Actualizacion Multi-LLM
+
+- [x] Iniciada fase PortalUP Stack Core Runtime Multi-LLM.
+- [x] Creado diseno arquitectonico en `docs/arquitectura-multi-llm.md`.
+- [x] Creado roadmap de ejecucion en `docs/roadmap-multi-llm.md`.
+- [x] Creado checklist especifico en `docs/checklist-multi-llm.md`.
+- [x] Ejecutada Etapa 1 base: configuracion, contrato de engine, politicas, registros y adapters iniciales.
+- [ ] Pendiente siguiente bloque: validador automatico de runtime e integracion con `scripts/pstack.js`.
