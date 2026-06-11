@@ -1,4 +1,8 @@
 vendor/gstack/
 dist/
 node_modules/
+outputs/sessions/
+outputs/handoffs/
+*.env
+.env
 

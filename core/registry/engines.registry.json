@@ -1,9 +1,17 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "engines": {
-    "codex": {
-      "status": "baseline",
-      "adapter": "core/adapters/codex/adapter.md",
+    "claude": {
+      "status": "validated-package",
+      "adapter": "core/adapters/claude/adapter.md",
+      "runtime": {
+        "authEnvVar": "ANTHROPIC_API_KEY",
+        "defaultModel": "claude-sonnet-4-6",
+        "maxContextTokens": 200000,
+        "sdkPackage": "@anthropic-ai/sdk",
+        "supportsStreaming": true,
+        "supportsCaching": true
+      },
       "supports": {
         "fileRead": true,
         "fileWrite": true,
@@ -12,9 +20,28 @@
         "handoff": true
       }
     },
-    "claude": {
-      "status": "validated-package",
-      "adapter": "core/adapters/claude/adapter.md",
+    "openai": {
+      "status": "runtime-v1",
+      "adapter": "core/adapters/openai/adapter.md",
+      "runtime": {
+        "authEnvVar": "OPENAI_API_KEY",
+        "defaultModel": "gpt-4o",
+        "maxContextTokens": 128000,
+        "sdkPackage": "openai",
+        "supportsStreaming": true,
+        "supportsCaching": false
+      },
+      "supports": {
+        "fileRead": false,
+        "fileWrite": false,
+        "commandExecution": false,
+        "nativeSkills": false,
+        "handoff": true
+      }
+    },
+    "codex": {
+      "status": "baseline",
+      "adapter": "core/adapters/codex/adapter.md",
       "supports": {
         "fileRead": true,
         "fileWrite": true,

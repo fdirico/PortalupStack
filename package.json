@@ -1,0 +1,26 @@
+{
+  "name": "portalup-stack",
+  "version": "0.5.0",
+  "description": "PortalUP Stack — AI development runtime with cross-LLM orchestration, session persistence, and analytics",
+  "main": "dist/orchestrator.js",
+  "scripts": {
+    "build": "npx tsc",
+    "build:check": "npx tsc --noEmit",
+    "test": "node --test tests/runtime/**/*.test.js",
+    "test:ts": "node --test --require ts-node/register tests/runtime/**/*.test.ts",
+    "validate": "node scripts/validate-all.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "openai": "^4.77.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}

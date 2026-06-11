@@ -1,22 +1,29 @@
 {
-  "version": "0.3.0-draft",
-  "engine": "codex",
+  "version": "0.5.0",
+  "activeEngine": "claude",
   "mode": "autonomous",
   "defaultSkill": "portalup-orchestrator",
   "contextPolicy": "compact-and-handoff",
+  "sessionDir": "outputs/sessions",
+  "statsFile": "outputs/stats.md",
+  "handoffDir": "outputs/handoffs",
   "handoff": {
     "enabled": true,
-    "template": "templates/continuity-summary.md",
-    "sessionOutputDir": "outputs/sessions"
+    "template": "templates/agent-handoff.md",
+    "continuityTemplate": "templates/continuity-summary.md"
   },
   "engines": {
-    "codex": {
-      "enabled": true,
-      "adapter": "core/adapters/codex/adapter.md"
-    },
     "claude": {
-      "enabled": false,
+      "enabled": true,
       "adapter": "core/adapters/claude/adapter.md"
+    },
+    "openai": {
+      "enabled": true,
+      "adapter": "core/adapters/openai/adapter.md"
+    },
+    "codex": {
+      "enabled": false,
+      "adapter": "core/adapters/codex/adapter.md"
     },
     "cursor": {
       "enabled": false,
