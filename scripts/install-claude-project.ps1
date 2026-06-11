@@ -21,6 +21,18 @@ if ($ResolvedProject.Path -eq $RepoRoot.Path) {
   throw "Refusing to install Claude project assets into the PortalUP Stack repository root."
 }
 
+Write-Step "Installing npm dependencies..."
+& npm install --prefix $RepoRoot --silent
+if ($LASTEXITCODE -ne 0) {
+  throw "npm install failed."
+}
+
+Write-Step "Building TypeScript runtime..."
+& npx --prefix $RepoRoot tsc --project (Join-Path $RepoRoot "tsconfig.json")
+if ($LASTEXITCODE -ne 0) {
+  throw "TypeScript build failed."
+}
+
 Write-Step "Generating Claude host assets..."
 & node (Join-Path $RepoRoot "scripts\generate-host-assets.js") --engine claude --write
 if ($LASTEXITCODE -ne 0) {

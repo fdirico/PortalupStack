@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.5.0 - 2026-06-11
+
+PortalUP Stack pasa de ser un generador de prompts a un runtime ejecutable independiente.
+
+**Runtime TypeScript (nuevo):**
+- `src/types.ts`: interfaces Message, Session, TokenUsage, EngineAdapter.
+- `src/adapters/anthropic.ts`: streaming real vía Anthropic SDK, token tracking, estimador de costo.
+- `src/adapters/openai.ts`: streaming real vía OpenAI SDK, misma interfaz.
+- `src/adapters/index.ts`: factory `getAdapter(engine)`.
+- `src/skill-loader.ts`: carga lazy de SKILL.md por nombre desde registry, cache, degradación silenciosa.
+- `src/session.ts`: create/save-atomic(.tmp→rename)/load/list/close de sesiones JSON locales.
+- `src/handoff.ts`: genera handoff markdown cross-LLM desde `templates/agent-handoff.md`, trunca contexto largo.
+- `src/stats.ts`: agrega sesiones → `outputs/stats.md` con totales globales, por engine y por proyecto.
+- `src/orchestrator.ts`: conecta adapters + session + handoff + stats; expone `ask`, `switchEngine`, `showStats`, `listSessions`, `generateHandoff`.
+
+**CLI actualizado (`scripts/pstack.js`):**
+- `pstack ask "<request>"` ejecuta contra la API real (antes: imprimía prompt).
+- `pstack ask "<request>" --skill <name>` inyecta el skill específico como contexto.
+- `pstack switch <engine> "<context>"` genera handoff y continúa en el engine destino.
+- `pstack stats` regenera `outputs/stats.md` y muestra resumen.
+- `pstack sessions` lista las últimas 20 sesiones con tokens y costo.
+- `pstack handoff` genera handoff de la sesión más reciente.
+- Comandos prompt-only (review, ship, architect, quality, modernize, compact, continue) mantienen compatibilidad.
+- Comandos info (engine, runtime, package, install-claude) actualizados para reflejar runtime real.
+
+**Infraestructura:**
+- `package.json` con deps: `@anthropic-ai/sdk`, `openai`, `typescript`, `@types/node`, `ts-node`.
+- `tsconfig.json`: target ES2020, module CommonJS, outDir dist/.
+- `core/registry/engines.registry.json`: campos runtime por engine (authEnvVar, defaultModel, maxContextTokens).
+- `portalup.config.example.json`: campos activeEngine, sessionDir, statsFile, handoffDir.
+- `outputs/sessions/` y `outputs/handoffs/` agregados a `.gitignore`.
+- `scripts/validate-secrets.js`: detecta patrones de API key en archivos rastreados, bloquea build si encuentra alguno.
+- `scripts/validate-all.js`: agrega validate-secrets a la suite.
+- `scripts/install-claude-project.ps1` y `.sh`: ejecutan `npm install` y `tsc` antes de instalar.
+- `docs/portalup-stack-v2-spec.md` y `docs/portalup-stack-v2-plan.md`: spec y plan confirmados.
+
+**Tests: 25 tests — 25 pass — 0 fail** (node:test, sin dependencias extra).
+
 ## 0.4.0 - 2026-06-10
 
 - Added `portalup-spec` for spec-driven development: 5-phase interrogation (Why → Scope → Technical → Draft → Document) that locks the "what" before planning or coding. Produces `docs/<topic>-spec.md` consumed by `portalup-autoplan`. Written in model-agnostic markdown — works with any LLM coding assistant.

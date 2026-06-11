@@ -11,6 +11,7 @@ const validators = [
   "validate-continuity.js",
   "validate-cli.js",
   "validate-runtime.js",
+  "validate-secrets.js",
 ];
 
 for (const validator of validators) {

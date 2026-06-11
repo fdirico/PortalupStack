@@ -31,6 +31,12 @@ if [[ "$PROJECT_ROOT" == "$REPO_ROOT" ]]; then
   exit 1
 fi
 
+echo "[portalup-stack] Installing npm dependencies..."
+npm install --prefix "$REPO_ROOT" --silent
+
+echo "[portalup-stack] Building TypeScript runtime..."
+npx --prefix "$REPO_ROOT" tsc --project "$REPO_ROOT/tsconfig.json"
+
 echo "[portalup-stack] Generating Claude host assets..."
 node "$REPO_ROOT/scripts/generate-host-assets.js" --engine claude --write
 

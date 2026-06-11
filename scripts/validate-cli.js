@@ -41,14 +41,19 @@ if (fs.existsSync(cli)) {
     if (!content.includes(token)) fail(`pstack.js must mention ${token}.`);
   }
 
+  // pstack ask now calls the real LLM API. Without API keys in CI it exits with
+  // a descriptive error — that is the expected behavior. Validate the error message
+  // is actionable, not a crash.
   const result = spawnSync(process.execPath, [cli, "ask", "test"], {
     cwd: root,
     encoding: "utf8",
+    env: { ...process.env, ANTHROPIC_API_KEY: "", OPENAI_API_KEY: "" },
   });
-  if (result.status !== 0) {
-    fail("pstack ask command failed.");
-  } else if (!result.stdout.includes("$portalup-orchestrator")) {
-    fail("pstack ask output must route through $portalup-orchestrator.");
+  const askOutput = (result.stdout || "") + (result.stderr || "");
+  if (result.status === 0) {
+    fail("pstack ask without API key should exit non-zero.");
+  } else if (!askOutput.includes("not built") && !askOutput.includes("API_KEY") && !askOutput.includes("Runtime not built")) {
+    fail("pstack ask without API key must show a descriptive error about API key or build.");
   }
 
   const compact = spawnSync(process.execPath, [cli, "compact", "test"], {
