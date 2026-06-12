@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-import type { EngineAdapter, Message, TokenUsage, CallOptions } from "../types.js";
+import type { EngineAdapter, Message, TokenUsage, CallOptions, ToolDefinition, StreamEvent } from "../types.js";
 
 const DEFAULT_MODEL = "gpt-4o";
 const DEFAULT_MAX_TOKENS = 4096;
@@ -30,6 +30,28 @@ function toOpenAIMessages(
     }
   }
   return result;
+}
+
+type OAIToolAcc = { id: string; name: string; args: string };
+
+function accumulateToolCall(
+  acc: Map<number, OAIToolAcc>,
+  tc: OpenAI.Chat.ChatCompletionChunk.Choice.Delta.ToolCall
+): void {
+  const entry = acc.get(tc.index);
+  if (entry) {
+    entry.args += tc.function?.arguments ?? "";
+  } else {
+    acc.set(tc.index, { id: tc.id ?? "", name: tc.function?.name ?? "", args: tc.function?.arguments ?? "" });
+  }
+}
+
+function* flushToolCalls(acc: Map<number, OAIToolAcc>): Generator<StreamEvent> {
+  for (const [, tc] of acc) {
+    let input: Record<string, unknown> = {};
+    try { input = JSON.parse(tc.args || "{}"); } catch { /* malformed — leave empty */ }
+    yield { type: "tool_call", id: tc.id, name: tc.name, input };
+  }
 }
 
 export class OpenAIAdapter implements EngineAdapter {
@@ -79,6 +101,50 @@ export class OpenAIAdapter implements EngineAdapter {
     }
 
     this.usage.estimatedCostUSD = estimateCost(model, this.usage.input, this.usage.output);
+  }
+
+  async *streamEvents(
+    messages: Message[],
+    skillContent: string,
+    tools: ToolDefinition[],
+    options?: CallOptions
+  ): AsyncIterable<StreamEvent> {
+    const model = options?.model ?? this.model;
+    const maxTokens = options?.maxTokens ?? DEFAULT_MAX_TOKENS;
+
+    this.usage = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, estimatedCostUSD: 0 };
+
+    const openAITools: OpenAI.Chat.ChatCompletionTool[] = tools.map((t) => ({
+      type: "function" as const,
+      function: { name: t.name, description: t.description, parameters: t.parameters },
+    }));
+
+    const stream = await this.client.chat.completions.create({
+      model,
+      max_tokens: maxTokens,
+      messages: toOpenAIMessages(messages, skillContent),
+      tools: openAITools,
+      stream: true,
+      stream_options: { include_usage: true },
+    });
+
+    const toolAcc = new Map<number, OAIToolAcc>();
+
+    for await (const chunk of stream) {
+      const delta = chunk.choices[0]?.delta;
+      if (delta?.content) yield { type: "text", chunk: delta.content };
+      for (const tc of delta?.tool_calls ?? []) {
+        accumulateToolCall(toolAcc, tc);
+      }
+      if (chunk.usage) {
+        this.usage.input = chunk.usage.prompt_tokens ?? 0;
+        this.usage.output = chunk.usage.completion_tokens ?? 0;
+      }
+    }
+
+    yield* flushToolCalls(toolAcc);
+    this.usage.estimatedCostUSD = estimateCost(model, this.usage.input, this.usage.output);
+    yield { type: "done" };
   }
 
   lastUsage(): TokenUsage {

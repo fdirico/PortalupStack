@@ -1,0 +1,70 @@
+{
+  "name": "portalup-stack",
+  "displayName": "PortalUP Stack",
+  "description": "PortalUP Stack LLM runtime — independent agentic chat with file and shell access inside VSCode.",
+  "version": "0.1.0",
+  "publisher": "portalup",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["AI", "Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "portalup-stack",
+          "title": "PortalUP",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "portalup-stack": [
+        {
+          "id": "portalup.sessions",
+          "name": "Sessions",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "portalup.openChat",
+        "title": "PortalUP: Open Chat"
+      },
+      {
+        "command": "portalup.clearSession",
+        "title": "PortalUP: Clear Current Session"
+      },
+      {
+        "command": "portalup.refreshSessions",
+        "title": "PortalUP: Refresh Sessions",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "portalup.refreshSessions",
+          "when": "view == portalup.sessions",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p ./tsconfig.json",
+    "watch": "tsc -p ./tsconfig.json --watch",
+    "package": "vsce package --out out/portalup-stack.vsix",
+    "test": "node --require ts-node/register --test tests/*.test.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.24.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.6.0 - 2026-06-11
+
+PortalUP Stack VSCode Plugin (v2): extensión nativa con tool use completo — el LLM puede leer, escribir y ejecutar comandos del proyecto directamente desde VSCode, sin depender de Claude Code.
+
+**Runtime src/ (extensiones):**
+- `src/types.ts`: agregados `ToolDefinition`, `StreamEvent`, `streamEvents?` en `EngineAdapter`.
+- `src/adapters/anthropic.ts`: nuevo `streamEvents()` con manejo de `tool_use` blocks en streaming (helpers `handleContentEvent` + `applyUsageEvent`).
+- `src/adapters/openai.ts`: nuevo `streamEvents()` con acumulación de `tool_calls` por índice entre chunks.
+- `src/orchestrator.ts`: nuevo `askWithTools()` con loop multi-turno (máximo 10 turns), manejo de tool results, persistencia de sesión y actualización de stats.
+
+**Plugin VSCode (`vscode-pstack/`):**
+- `src/extension.ts`: punto de entrada, registra comandos y vistas, activa chat panel automáticamente.
+- `src/runtime-bridge.ts`: orquesta adapter + tools + session manager para contexto VSCode. Mantiene historial de mensajes entre turnos.
+- `src/views/ChatPanel.ts`: WebviewPanel con streaming token a token, indicadores de tool use, confirmaciones nativas VSCode para write_file y run_command.
+- `src/views/SessionTree.ts`: TreeDataProvider agrupado por fecha (Today/Yesterday/YYYY-MM-DD).
+- `src/views/StatusBar.ts`: ítem persistente con engine activo y tokens acumulados de la sesión.
+- `src/tools/file-tools.ts`: `read_file`, `write_file`, `list_directory` con workspace root guard + bloqueo de `outputs/sessions/` y `outputs/handoffs/`.
+- `src/tools/shell-tools.ts`: `run_command` con `confirmFn` injectable para testabilidad.
+- `src/tools/index.ts`: `TOOL_DEFINITIONS` con JSON Schema para los 4 tools.
+- `media/chat.html`: webview con HTML escaping (textContent, no innerHTML), CSP estricto, auto-resize del textarea.
+
+**Tests: 58 tests — 58 pass — 0 fail.**
+- 41 tests existentes sin cambios.
+- 11 tests nuevos en `tests/runtime/`: `anthropic-adapter-tools`, `openai-adapter-tools`, `ask-with-tools`.
+- 17 tests nuevos en `vscode-pstack/tests/`: `file-tools` (10), `shell-tools` (4), `runtime-bridge` (3).
+
+**Seguridad:**
+- Workspace root guard obligatoria en todos los file tools: rechaza paths fuera del workspace y paths en `outputs/sessions/`.
+- HTML escaping en webview: `textContent` en lugar de `innerHTML` para todo output del LLM.
+- Max 10 turns en tool loop: protección de bucle infinito.
+- `run_command` requiere confirmación explícita del usuario antes de cada ejecución.
+
 ## 0.5.0 - 2026-06-11
 
 PortalUP Stack pasa de ser un generador de prompts a un runtime ejecutable independiente.

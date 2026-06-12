@@ -6,7 +6,7 @@ import { SessionManager } from "./session.js";
 import { HandoffGenerator } from "./handoff.js";
 import { StatsEngine } from "./stats.js";
 import { SkillLoader } from "./skill-loader.js";
-import type { Session, Message } from "./types.js";
+import type { Session, Message, ToolDefinition, StreamEvent } from "./types.js";
 
 function loadConfig(root: string): Record<string, any> {
   const localPath = path.join(root, "portalup.config.json");
@@ -91,6 +91,105 @@ export async function ask(root: string, input: string, options: AskOptions = {})
   sessions.save(session);
   printTokenSummary(session);
 
+  stats.refresh();
+}
+
+export interface AskWithToolsOptions extends AskOptions {
+  maxToolTurns?: number;
+}
+
+export type ToolExecutor = (name: string, input: Record<string, unknown>) => Promise<string>;
+
+export async function askWithTools(
+  root: string,
+  input: string,
+  tools: ToolDefinition[],
+  onEvent: (event: StreamEvent) => void,
+  executor: ToolExecutor,
+  options: AskWithToolsOptions = {}
+): Promise<void> {
+  const config = loadConfig(root);
+  const engine = config.activeEngine ?? "claude";
+  const sessionDir = config.sessionDir ? path.join(root, config.sessionDir) : undefined;
+  const statsFile = config.statsFile ? path.join(root, config.statsFile) : undefined;
+
+  const adapter = getAdapter(engine);
+  if (!adapter.streamEvents) {
+    throw new Error(`Engine "${engine}" does not support tool use (streamEvents not implemented).`);
+  }
+
+  const sessions = new SessionManager(root, sessionDir);
+  const stats = new StatsEngine(root, sessionDir, statsFile);
+  const skillLoader = new SkillLoader(root);
+
+  const skillName = options.skill ?? skillLoader.defaultSkill;
+  const skillContent = skillLoader.load(skillName);
+
+  let session = sessions.create(engine, (adapter as any).model ?? engine, options.hint ?? input.slice(0, 40));
+  session = sessions.trackSkill(session, skillName);
+
+  const userMessage: Message = { role: "user", content: input, timestamp: new Date().toISOString() };
+  session = sessions.addMessage(session, userMessage);
+
+  // Local multi-turn message array — uses plain string content (tool results inlined as text)
+  // so we never need to change the Message.content: string schema.
+  const turnMessages: Message[] = [...session.messages];
+  const maxTurns = options.maxToolTurns ?? 10;
+  let turns = 0;
+  let finalText = "";
+
+  while (turns < maxTurns) {
+    const textChunks: string[] = [];
+    const toolCalls: Array<{ id: string; name: string; input: Record<string, unknown> }> = [];
+
+    for await (const event of adapter.streamEvents!(turnMessages, skillContent, tools, { model: options.model })) {
+      if (event.type === "text") {
+        textChunks.push(event.chunk);
+        onEvent(event);
+      } else if (event.type === "tool_call") {
+        onEvent(event);
+        toolCalls.push({ id: event.id, name: event.name, input: event.input });
+      }
+    }
+
+    if (toolCalls.length === 0) {
+      finalText = textChunks.join("");
+      break;
+    }
+
+    // Append assistant turn (text + tool calls summarised as text for session storage)
+    const assistantSummary = [
+      textChunks.join(""),
+      ...toolCalls.map((tc) => `[tool_call:${tc.name}]`),
+    ].filter(Boolean).join("\n");
+
+    turnMessages.push({ role: "assistant", content: assistantSummary, timestamp: new Date().toISOString() });
+
+    // Execute each tool and append results
+    for (const tc of toolCalls) {
+      const result = await executor(tc.name, tc.input);
+      turnMessages.push({ role: "user", content: `[tool_result:${tc.name}] ${result}`, timestamp: new Date().toISOString() });
+    }
+
+    turns++;
+  }
+
+  if (turns >= maxTurns) {
+    const limitMsg = "[max tool turns reached — stopping]";
+    onEvent({ type: "text", chunk: limitMsg });
+    finalText += limitMsg;
+  }
+
+  const usage = adapter.lastUsage();
+  session = sessions.addUsage(session, usage);
+  session = sessions.addMessage(session, {
+    role: "assistant",
+    content: finalText,
+    timestamp: new Date().toISOString(),
+    tokens: { input: usage.input, output: usage.output },
+  });
+  session = sessions.close(session);
+  sessions.save(session);
   stats.refresh();
 }
 

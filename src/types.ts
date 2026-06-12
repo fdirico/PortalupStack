@@ -45,9 +45,26 @@ export interface CallOptions {
   maxTokens?: number;
 }
 
+export interface ToolDefinition {
+  name: string;
+  description: string;
+  parameters: Record<string, unknown>; // JSON Schema object
+}
+
+export type StreamEvent =
+  | { type: "text"; chunk: string }
+  | { type: "tool_call"; id: string; name: string; input: Record<string, unknown> }
+  | { type: "done" };
+
 export interface EngineAdapter {
   readonly name: string;
   stream(messages: Message[], skillContent: string, options?: CallOptions): AsyncIterable<string>;
+  streamEvents?(
+    messages: Message[],
+    skillContent: string,
+    tools: ToolDefinition[],
+    options?: CallOptions
+  ): AsyncIterable<StreamEvent>;
   lastUsage(): TokenUsage;
 }
 
