@@ -1,8 +1,6 @@
 import * as vscode from "vscode";
-import * as fs from "node:fs";
-import * as path from "node:path";
 import type { SessionSummary } from "../../../src/types.js";
-import { SessionManager } from "../../../src/session.js";
+import { SessionManager } from "../../../dist/session.js";
 
 export class SessionNode extends vscode.TreeItem {
   constructor(
@@ -26,12 +24,12 @@ export class DateGroupNode extends vscode.TreeItem {
 type TreeNode = DateGroupNode | SessionNode;
 
 export class SessionTreeProvider implements vscode.TreeDataProvider<TreeNode> {
-  private _onDidChangeTreeData = new vscode.EventEmitter<TreeNode | undefined | void>();
+  private readonly _onDidChangeTreeData = new vscode.EventEmitter<TreeNode | undefined | void>();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
-  private manager: SessionManager;
+  private readonly manager: SessionManager;
 
-  constructor(private wsRoot: string) {
+  constructor(private readonly wsRoot: string) {
     this.manager = new SessionManager(wsRoot);
   }
 
@@ -60,7 +58,10 @@ export class SessionTreeProvider implements vscode.TreeDataProvider<TreeNode> {
 
     for (const s of summaries) {
       const date = s.startedAt.slice(0, 10);
-      const label = date === today ? "Today" : date === yesterday ? "Yesterday" : date;
+      let label: string;
+      if (date === today) { label = "Today"; }
+      else if (date === yesterday) { label = "Yesterday"; }
+      else { label = date; }
       const existing = byDate.get(label);
       if (existing) {
         existing.push(s);

@@ -1,10 +1,9 @@
 import * as path from "node:path";
-import type { StreamEvent, ToolDefinition } from "../../src/types.js";
-import { getAdapter } from "../../src/adapters/index.js";
-import { SessionManager } from "../../src/session.js";
-import { StatsEngine } from "../../src/stats.js";
-import { SkillLoader } from "../../src/skill-loader.js";
-import type { Message, Session } from "../../src/types.js";
+import type { StreamEvent, Message, Session } from "../../src/types.js";
+import { getAdapter } from "../../dist/adapters/index.js";
+import { SessionManager } from "../../dist/session.js";
+import { StatsEngine } from "../../dist/stats.js";
+import { SkillLoader } from "../../dist/skill-loader.js";
 import { readFile, writeFile, listDirectory } from "./tools/file-tools.js";
 import { runCommand } from "./tools/shell-tools.js";
 import { TOOL_DEFINITIONS } from "./tools/index.js";
@@ -16,16 +15,20 @@ interface ConfirmFns {
   confirmCommand: (command: string) => Promise<boolean>;
 }
 
+function inputStr(val: unknown): string {
+  return typeof val === "string" ? val : "";
+}
+
 export class RuntimeBridge {
   private messages: Message[] = [];
   private sessionInProgress: Session | null = null;
-  private sessions: SessionManager;
-  private stats: StatsEngine;
-  private skillLoader: SkillLoader;
-  private engine: string;
+  private readonly sessions: SessionManager;
+  private readonly stats: StatsEngine;
+  private readonly skillLoader: SkillLoader;
+  private readonly engine: string;
   private totalTokens = 0;
 
-  constructor(private wsRoot: string, private statusBar: StatusBarController) {
+  constructor(private readonly wsRoot: string, private readonly statusBar: StatusBarController) {
     const config = this.loadConfig();
     this.engine = config.activeEngine ?? "claude";
     const sessionDir = config.sessionDir ? path.join(wsRoot, config.sessionDir) : undefined;
@@ -139,18 +142,13 @@ export class RuntimeBridge {
       try {
         switch (name) {
           case "read_file":
-            return readFile(String(input["path"] ?? ""), this.wsRoot);
+            return readFile(inputStr(input["path"]), this.wsRoot);
           case "write_file":
-            return writeFile(
-              String(input["path"] ?? ""),
-              String(input["content"] ?? ""),
-              this.wsRoot,
-              confirmFns.confirmWrite
-            );
+            return writeFile(inputStr(input["path"]), inputStr(input["content"]), this.wsRoot, confirmFns.confirmWrite);
           case "list_directory":
-            return listDirectory(String(input["path"] ?? ""), this.wsRoot);
+            return listDirectory(inputStr(input["path"]), this.wsRoot);
           case "run_command":
-            return runCommand(String(input["command"] ?? ""), confirmFns.confirmCommand);
+            return runCommand(inputStr(input["command"]), confirmFns.confirmCommand);
           default:
             return `unknown tool: ${name}`;
         }
