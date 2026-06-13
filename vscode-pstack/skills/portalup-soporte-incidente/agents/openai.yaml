@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Incident"
+  short_description: "Triage incidents and client updates"
+  default_prompt: "Use $portalup-soporte-incidente to triage this incident."
+policy:
+  allow_implicit_invocation: true

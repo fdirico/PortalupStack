@@ -1,9 +1,27 @@
 import * as vscode from "vscode";
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as os from "node:os";
 import { ChatPanel } from "./views/ChatPanel.js";
 import { SessionTreeProvider } from "./views/SessionTree.js";
 import { StatusBarController } from "./views/StatusBar.js";
 
+function syncSkillsToClaude(extensionPath: string): void {
+  const skillsSrc = path.join(extensionPath, "skills");
+  if (!fs.existsSync(skillsSrc)) return;
+
+  const skillsDst = path.join(os.homedir(), ".claude", "skills");
+  fs.mkdirSync(skillsDst, { recursive: true });
+  fs.cpSync(skillsSrc, skillsDst, { recursive: true, force: true });
+}
+
 export function activate(context: vscode.ExtensionContext): void {
+  try {
+    syncSkillsToClaude(context.extensionUri.fsPath);
+  } catch (err) {
+    console.warn("[PortalUP] Skills sync failed:", err);
+  }
+
   const workspaceRoot = vscode.workspace.workspaceFolders?.[0]?.uri.fsPath ?? process.cwd();
 
   const statusBar = new StatusBarController();

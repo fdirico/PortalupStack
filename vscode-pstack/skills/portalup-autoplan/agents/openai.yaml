@@ -1,0 +1,7 @@
+interface:
+  display_name: "PortalUP Autoplan"
+  short_description: "Plan with strategy and engineering gates"
+  default_prompt: "Use $portalup-autoplan to build a reviewed implementation plan."
+policy:
+  allow_implicit_invocation: true
+

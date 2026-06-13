@@ -1,4 +1,4 @@
-import type { ToolDefinition } from "../../../src/types.js";
+import type { ToolDefinition } from "../../dist/types.js";
 
 export const TOOL_DEFINITIONS: ToolDefinition[] = [
   {

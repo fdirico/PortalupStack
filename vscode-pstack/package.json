@@ -55,10 +55,16 @@
     }
   },
   "scripts": {
-    "compile": "tsc -p ./tsconfig.json",
+    "copy-runtime": "node -e \"require('fs').cpSync('../dist', './dist', {recursive: true, force: true})\"",
+    "copy-skills": "node -e \"require('fs').cpSync('../.agents/skills', './skills', {recursive: true, force: true})\"",
+    "compile": "npm run copy-runtime && tsc -p ./tsconfig.json",
     "watch": "tsc -p ./tsconfig.json --watch",
-    "package": "vsce package --out out/portalup-stack.vsix",
+    "package": "npm run copy-skills && npm run copy-runtime && vsce package --allow-missing-repository --out out/portalup-stack.vsix",
     "test": "node --require ts-node/register --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "openai": "^4.77.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

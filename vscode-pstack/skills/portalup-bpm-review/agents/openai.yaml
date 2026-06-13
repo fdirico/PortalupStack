@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP BPM"
+  short_description: "Review BPM workflows and process automation"
+  default_prompt: "Use $portalup-bpm-review to review this BPM process or incident."
+policy:
+  allow_implicit_invocation: true

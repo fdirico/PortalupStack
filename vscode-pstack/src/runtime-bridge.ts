@@ -1,9 +1,10 @@
 import * as path from "node:path";
-import type { StreamEvent, Message, Session } from "../../src/types.js";
-import { getAdapter } from "../../dist/adapters/index.js";
-import { SessionManager } from "../../dist/session.js";
-import { StatsEngine } from "../../dist/stats.js";
-import { SkillLoader } from "../../dist/skill-loader.js";
+import * as os from "node:os";
+import type { StreamEvent, Message, Session } from "../dist/types.js";
+import { getAdapter } from "../dist/adapters/index.js";
+import { SessionManager } from "../dist/session.js";
+import { StatsEngine } from "../dist/stats.js";
+import { SkillLoader } from "../dist/skill-loader.js";
 import { readFile, writeFile, listDirectory } from "./tools/file-tools.js";
 import { runCommand } from "./tools/shell-tools.js";
 import { TOOL_DEFINITIONS } from "./tools/index.js";
@@ -19,6 +20,11 @@ function inputStr(val: unknown): string {
   return typeof val === "string" ? val : "";
 }
 
+export interface AutoApproveConfig {
+  writeFile: boolean;
+  runCommand: boolean;
+}
+
 export class RuntimeBridge {
   private messages: Message[] = [];
   private sessionInProgress: Session | null = null;
@@ -27,12 +33,19 @@ export class RuntimeBridge {
   private readonly skillLoader: SkillLoader;
   private readonly engine: string;
   private totalTokens = 0;
+  readonly autoApprove: AutoApproveConfig;
 
   constructor(private readonly wsRoot: string, private readonly statusBar: StatusBarController) {
     const config = this.loadConfig();
     this.engine = config.activeEngine ?? "claude";
     const sessionDir = config.sessionDir ? path.join(wsRoot, config.sessionDir) : undefined;
     const statsFile = config.statsFile ? path.join(wsRoot, config.statsFile) : undefined;
+
+    const auto = (config.autoApprove ?? {}) as Partial<AutoApproveConfig>;
+    this.autoApprove = {
+      writeFile: auto.writeFile === true,
+      runCommand: auto.runCommand === true,
+    };
 
     this.sessions = new SessionManager(wsRoot, sessionDir);
     this.stats = new StatsEngine(wsRoot, sessionDir, statsFile);
@@ -159,10 +172,31 @@ export class RuntimeBridge {
   }
 
   private loadConfig(): Record<string, any> {
+    const globalConfig = this.loadGlobalConfig();
+    const localConfig = this.loadLocalConfig();
+    return { ...globalConfig, ...localConfig };
+  }
+
+  private loadGlobalConfig(): Record<string, any> {
+    const home = process.env["PORTALUP_HOME"] ?? path.join(os.homedir(), ".portalup");
+    const globalPath = path.join(home, "config.json");
+    if (!fs.existsSync(globalPath)) return {};
+    try {
+      return JSON.parse(fs.readFileSync(globalPath, "utf8"));
+    } catch {
+      return {};
+    }
+  }
+
+  private loadLocalConfig(): Record<string, any> {
     const localPath = path.join(this.wsRoot, "portalup.config.json");
     const examplePath = path.join(this.wsRoot, "portalup.config.example.json");
     const configPath = fs.existsSync(localPath) ? localPath : examplePath;
     if (!fs.existsSync(configPath)) return {};
-    return JSON.parse(fs.readFileSync(configPath, "utf8"));
+    try {
+      return JSON.parse(fs.readFileSync(configPath, "utf8"));
+    } catch {
+      return {};
+    }
   }
 }

@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP FileNet"
+  short_description: "Review FileNet incidents and changes"
+  default_prompt: "Use $portalup-filenet-review to diagnose this FileNet issue."
+policy:
+  allow_implicit_invocation: true

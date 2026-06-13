@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP CSO"
+  short_description: "Review security and operational risk"
+  default_prompt: "Use $portalup-cso to assess security risk."
+policy:
+  allow_implicit_invocation: true

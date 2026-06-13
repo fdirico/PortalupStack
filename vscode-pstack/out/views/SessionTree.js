@@ -1,0 +1,106 @@
+"use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SessionTreeProvider = exports.DateGroupNode = exports.SessionNode = void 0;
+const vscode = __importStar(require("vscode"));
+const session_js_1 = require("../../dist/session.js");
+class SessionNode extends vscode.TreeItem {
+    constructor(summary, label) {
+        super(label, vscode.TreeItemCollapsibleState.None);
+        this.summary = summary;
+        this.description = `${summary.engine} · ${summary.tokens.input.toLocaleString("en-US")} in`;
+        this.tooltip = `${summary.id}\n${summary.startedAt}`;
+        this.contextValue = "session";
+    }
+}
+exports.SessionNode = SessionNode;
+class DateGroupNode extends vscode.TreeItem {
+    constructor(label, sessions) {
+        super(label, vscode.TreeItemCollapsibleState.Expanded);
+        this.sessions = sessions;
+        this.contextValue = "dateGroup";
+    }
+}
+exports.DateGroupNode = DateGroupNode;
+class SessionTreeProvider {
+    constructor(wsRoot) {
+        this.wsRoot = wsRoot;
+        this._onDidChangeTreeData = new vscode.EventEmitter();
+        this.onDidChangeTreeData = this._onDidChangeTreeData.event;
+        this.manager = new session_js_1.SessionManager(wsRoot);
+    }
+    refresh() {
+        this._onDidChangeTreeData.fire();
+    }
+    getTreeItem(element) {
+        return element;
+    }
+    getChildren(element) {
+        if (element instanceof DateGroupNode) {
+            return element.sessions.map((s) => {
+                const time = s.startedAt.slice(11, 16);
+                const label = `${time} · ${s.skillsUsed[0] ?? "chat"}`;
+                return new SessionNode(s, label);
+            });
+        }
+        // Root — group by date
+        const summaries = this.manager.list(50);
+        const byDate = new Map();
+        const today = new Date().toISOString().slice(0, 10);
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        for (const s of summaries) {
+            const date = s.startedAt.slice(0, 10);
+            let label;
+            if (date === today) {
+                label = "Today";
+            }
+            else if (date === yesterday) {
+                label = "Yesterday";
+            }
+            else {
+                label = date;
+            }
+            const existing = byDate.get(label);
+            if (existing) {
+                existing.push(s);
+            }
+            else {
+                byDate.set(label, [s]);
+            }
+        }
+        return Array.from(byDate.entries()).map(([label, sessions]) => new DateGroupNode(label, sessions));
+    }
+}
+exports.SessionTreeProvider = SessionTreeProvider;

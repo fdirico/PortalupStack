@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Orchestrator"
+  short_description: "Route natural-language requests to PortalUP specialists"
+  default_prompt: "Use $portalup-orchestrator to interpret this request, select the right PortalUP specialists, and produce a continuity-aware plan."
+policy:
+  allow_implicit_invocation: true

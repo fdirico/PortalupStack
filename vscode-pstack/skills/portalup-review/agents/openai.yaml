@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Review"
+  short_description: "Review PortalUP code and delivery risk"
+  default_prompt: "Use $portalup-review to review this change before merge."
+policy:
+  allow_implicit_invocation: true

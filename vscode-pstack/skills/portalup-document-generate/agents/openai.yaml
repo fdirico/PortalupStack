@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP Docs"
+  short_description: "Generate PortalUP technical documents"
+  default_prompt: "Use $portalup-document-generate to document this system."
+policy:
+  allow_implicit_invocation: true

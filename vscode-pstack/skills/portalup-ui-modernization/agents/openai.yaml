@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP UI Modernization"
+  short_description: "Modernize client-grade UI/UX"
+  default_prompt: "Use $portalup-ui-modernization to turn this application or screen into a modern, responsive, polished, client-grade experience."
+policy:
+  allow_implicit_invocation: true

@@ -5,8 +5,13 @@
   "defaultSkill": "portalup-orchestrator",
   "contextPolicy": "compact-and-handoff",
   "sessionDir": "outputs/sessions",
+  "projectsDir": "",
   "statsFile": "outputs/stats.md",
   "handoffDir": "outputs/handoffs",
+  "autoApprove": {
+    "writeFile": true,
+    "runCommand": false
+  },
   "handoff": {
     "enabled": true,
     "template": "templates/agent-handoff.md",

@@ -10,7 +10,11 @@ export class SkillLoader {
   constructor(root: string) {
     this.root = root;
     const registryPath = path.join(root, "core/registry/skills.registry.json");
-    this.registry = JSON.parse(fs.readFileSync(registryPath, "utf8")) as SkillRegistry;
+    if (fs.existsSync(registryPath)) {
+      this.registry = JSON.parse(fs.readFileSync(registryPath, "utf8")) as SkillRegistry;
+    } else {
+      this.registry = { version: "0", defaultSkill: "", skills: [] };
+    }
   }
 
   get defaultSkill(): string {

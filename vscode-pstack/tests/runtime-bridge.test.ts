@@ -1,7 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert/strict";
-import type { StreamEvent, ToolDefinition } from "../../src/types.js";
-import type { Message } from "../../src/types.js";
+import type { StreamEvent, ToolDefinition, Message } from "../dist/types.js";
 
 // Test the tool loop logic directly (inline mirror of RuntimeBridge.ask loop)
 // so we don't need a real filesystem, VSCode API, or Anthropic/OpenAI key.

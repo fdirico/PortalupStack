@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import type { SessionSummary } from "../../../src/types.js";
-import { SessionManager } from "../../../dist/session.js";
+import type { SessionSummary } from "../../dist/types.js";
+import { SessionManager } from "../../dist/session.js";
 
 export class SessionNode extends vscode.TreeItem {
   constructor(

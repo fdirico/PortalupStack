@@ -1,0 +1,6 @@
+interface:
+  display_name: "PortalUP QA"
+  short_description: "Plan PortalUP tests and acceptance"
+  default_prompt: "Use $portalup-qa to create a practical QA plan."
+policy:
+  allow_implicit_invocation: true

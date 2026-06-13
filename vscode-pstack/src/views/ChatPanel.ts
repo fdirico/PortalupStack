@@ -2,20 +2,20 @@ import * as vscode from "vscode";
 import * as fs from "node:fs";
 import * as path from "node:path";
 import * as crypto from "node:crypto";
-import type { StreamEvent } from "../../../src/types.js";
+import type { StreamEvent } from "../../dist/types.js";
 import type { StatusBarController } from "./StatusBar.js";
 import { RuntimeBridge } from "../runtime-bridge.js";
 
 export class ChatPanel implements vscode.Disposable {
-  private panel: vscode.WebviewPanel;
-  private bridge: RuntimeBridge;
-  private disposables: vscode.Disposable[] = [];
+  private readonly panel: vscode.WebviewPanel;
+  private readonly bridge!: RuntimeBridge;
+  private readonly disposables: vscode.Disposable[] = [];
 
   constructor(
     extensionUri: vscode.Uri,
-    private wsRoot: string,
-    private statusBar: StatusBarController,
-    private onDispose: () => void
+    private readonly wsRoot: string,
+    private readonly statusBar: StatusBarController,
+    private readonly onDispose: () => void
   ) {
     this.panel = vscode.window.createWebviewPanel(
       "portalup.chat",
@@ -28,8 +28,18 @@ export class ChatPanel implements vscode.Disposable {
       }
     );
 
-    this.bridge = new RuntimeBridge(wsRoot, statusBar);
-    this.panel.webview.html = this.buildHtml(extensionUri);
+    try {
+      this.bridge = new RuntimeBridge(wsRoot, statusBar);
+    } catch (err: any) {
+      this.panel.webview.html = `<html><body style="background:#1e1e1e;color:#f44;padding:20px;font-family:monospace;white-space:pre-wrap;">RuntimeBridge init failed:\n${err?.message}\n\n${err?.stack}</body></html>`;
+      return;
+    }
+    try {
+      this.panel.webview.html = this.buildHtml(extensionUri);
+    } catch (err: any) {
+      this.panel.webview.html = `<html><body style="background:#1e1e1e;color:#f44;padding:20px;font-family:monospace;white-space:pre-wrap;">buildHtml failed:\n${err?.message}\n\n${err?.stack}</body></html>`;
+      return;
+    }
 
     this.panel.webview.onDidReceiveMessage(
       (msg) => this.handleMessage(msg),
@@ -70,7 +80,8 @@ export class ChatPanel implements vscode.Disposable {
 
   private buildConfirmFns() {
     return {
-      confirmWrite: async (filePath: string, content: string): Promise<boolean> => {
+      confirmWrite: async (filePath: string, _content: string): Promise<boolean> => {
+        if (this.bridge.autoApprove.writeFile) return true;
         const rel = path.relative(this.wsRoot, filePath);
         const choice = await vscode.window.showWarningMessage(
           `PortalUP wants to write to: ${rel}`,
@@ -81,6 +92,7 @@ export class ChatPanel implements vscode.Disposable {
         return choice === "Approve";
       },
       confirmCommand: async (command: string): Promise<boolean> => {
+        if (this.bridge.autoApprove.runCommand) return true;
         const choice = await vscode.window.showWarningMessage(
           `PortalUP wants to run:\n\n${command}`,
           { modal: true, detail: "Review the command carefully before allowing." },
