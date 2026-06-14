@@ -13,28 +13,43 @@ Also use it when multiple PortalUP specialists may be relevant and the user need
 
 Do not use it to bypass safety. If the request involves destructive actions, production impact, credentials, migrations, force pushes, or secrets, route through `$portalup-careful` and stop before execution when confirmation is required.
 
+## Resolving the Projects Directory — MANDATORY
+
+**Before executing any project command, read the global config to find `projectsDir`:**
+
+1. Read the file `D:\codex\.portalup\config.json`
+2. Use the value of `"projectsDir"` from that file as the base for all project paths
+3. If the file does not exist, fallback: `C:\Users\[current-user]\.portalup\projects\`
+
+**NEVER use `~/.portalup/` directly.** On Windows, `~` resolves to the system home (`C:\Users\...`), not to the configured projects directory. Always read the config first.
+
+---
+
 ## Project Management Commands
 
 These commands are recognized in natural language. The Orchestrator handles them directly before routing to any specialist.
 
 ### `crear proyecto [nombre]`
 
-Creates a new project at `~/.portalup/projects/[nombre]/`:
-- `project.md` — living document (use `templates/project-living-doc.md`)
+Creates a new project at `[projectsDir]/[nombre]/`:
+- `project.md` — living document (structure defined in this skill)
 - `sessions/` — directory for session continuity files
 
 The project name is normalized to lowercase with hyphens (e.g., "Mi Proyecto AA1" → `mi-proyecto-aa1`).
 
+On success: confirm creation and ask how the user wants to start. Do not continue executing.
+
 ### `continuar proyecto [nombre]`
 
-1. Reads `~/.portalup/projects/[nombre]/project.md`.
+1. Reads `[projectsDir]/[nombre]/project.md`.
 2. Injects the full content as context under `## Active Project` before processing the user's request.
-3. Determines the next session number: reads `sessions/` directory, counts existing files, assigns `YYYYMMDD-N`.
+3. Determines the next session number: reads `[projectsDir]/[nombre]/sessions/` directory, counts existing files for today, assigns `YYYYMMDD-N`.
 4. Announces: "Retomando proyecto [nombre] — sesión [YYYYMMDD-N]."
+5. Asks how the user wants to continue. Does not start executing.
 
 ### `actualizar proyecto` (or triggered automatically — see rule below)
 
-Updates `~/.portalup/projects/[nombre]/project.md` incrementally:
+Updates `[projectsDir]/[nombre]/project.md` incrementally:
 - Adds new decisions to `## Decisions`.
 - Adds new facts to `## Facts`.
 - Updates `## Current State` to reflect current understanding.
@@ -42,7 +57,7 @@ Updates `~/.portalup/projects/[nombre]/project.md` incrementally:
 
 ### `ver proyectos`
 
-Lists all directories under `~/.portalup/projects/` with their name and last-modified date of `project.md`.
+Lists all directories under `[projectsDir]/` with their name and last-modified date of `project.md`.
 
 ---
 
@@ -70,7 +85,7 @@ Do NOT update project.md for:
 
 Sessions within a project are numbered as `YYYYMMDD-N` where N starts at 1 each day.
 - Example: first session on 2026-06-12 → `20260612-1`; second → `20260612-2`.
-- Session continuity files live at: `~/.portalup/projects/[nombre]/sessions/20260612-1.md`
+- Session continuity files live at: `[projectsDir]/[nombre]/sessions/20260612-1.md`
 - Use `templates/continuity-summary.md` for session file content.
 
 When a user returns to an old session (e.g., "recordé algo de la sesión 2"):
@@ -142,7 +157,7 @@ Continuity summary
 
 Persistent continuity
 - Save needed: yes | no
-- Session file: ~/.portalup/projects/[nombre]/sessions/YYYYMMDD-N.md
+- Session file: [projectsDir]/[nombre]/sessions/YYYYMMDD-N.md
 - Template: templates/continuity-summary.md
 
 Project update
@@ -170,7 +185,7 @@ Project update
 - Output includes continuity for future agents.
 - Long or multi-specialist tasks produce a persistent continuity recommendation.
 - Handoffs use `templates/agent-handoff.md`.
-- Session files use `templates/continuity-summary.md` and live under `~/.portalup/projects/[nombre]/sessions/`.
+- Session files use `templates/continuity-summary.md` and live under `[projectsDir]/[nombre]/sessions/`.
 - If a project is active: apply automatic project.md update rule after every response.
 - When returning to a prior session: load project.md + specific session file; do not reopen old session as current.
 
